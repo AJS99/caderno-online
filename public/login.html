@@ -83,22 +83,37 @@
 		$(function() {
 			$("#signup").submit(function(e){
 				e.preventDefault();
-				// validacao do usuario e senha
-				var username = $("#Login").val();
-				var password = $("#Senha").val();
-				var user = new Parse.User();
-				user.set("username", username);
-				user.set("password", password);
-				user.set("email", "email@example.com");
-				user.signUp(null, {
+
+				Parse.FacebookUtils.logIn(null, {
 				  success: function(user) {
-				  	this.user = user;
-				    console.log(JSON.stringify(user));
+				  	console.log(JSON.stringify(user));
+				    if (!user.existed()) {
+				      console.log("User signed up and logged in through Facebook!");
+				    } else {
+				      console.log("User logged in through Facebook!");
+				    }
 				  },
 				  error: function(user, error) {
-				    console.log("Error: " + error.code + " " + error.message);
+				    console.log("User cancelled the Facebook login or did not fully authorize.");
 				  }
 				});
+
+				// validacao do usuario e senha
+				// var username = $("#Login").val();
+				// var password = $("#Senha").val();
+				// var user = new Parse.User();
+				// user.set("username", username);
+				// user.set("password", password);
+				// user.set("email", "email@example.com");
+				// user.signUp(null, {
+				//   success: function(user) {
+				//   	this.user = user;
+				//     console.log(JSON.stringify(user));
+				//   },
+				//   error: function(user, error) {
+				//     console.log("Error: " + error.code + " " + error.message);
+				//   }
+				// });
 			});
 		});
 	</script>
