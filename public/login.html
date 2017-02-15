@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Parse Server Example</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+  </head>
+
+  <body>
+	<div class="container">
+		<div class="row text-center ">
+			<div class="col-md-12">
+				<br /><br />
+				<h2> Bem vindo ao CadernOnline</h2>
+
+				<h5>(Utilize seu Login Para Acesso)</h5>
+				<br />
+			</div>
+		</div>
+		<div class="row ">
+			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>  Preencha os Campos Abaixo  </strong>  
+					</div>
+					<div class="panel-body">
+						<form role="form" action="http://localhost/Locav/Login.php" method="POST" name="Acesso" id="signup">
+							<br />
+							<div class="form-group input-group">
+								<span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
+								<input type="text" name="Login" id="Login" class="form-control" placeholder="Seu Login" required/>
+							</div>
+							<div class="form-group input-group">
+								<span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
+								<input type="password" name="Senha" id="Senha" class="form-control"  placeholder="*******" required />
+							</div>
+							<div class="form-group">
+								<label class="checkbox-inline">
+									<input type="checkbox" /> Lembrar-me
+								</label>
+								<span class="pull-right">
+									<a href="#" >Esqueci Minha Senha </a> 
+								</span>
+							</div>
+							<button type="submit" name="Acessar" id="Acessar" class="btn btn-primary">Acessar</button>          <button type="reset" class="btn btn-primary">Cancelar</button>
+							<hr />                                
+						</form>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	
+	<script src="js/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/parse.min.js"></script>
+	<script src="js/caderno-on-line.js"></script>
+	<script type="text/javascript">
+		window.fbAsyncInit = function() {
+			FB.init({
+			  appId      : '707119556132405',
+			  xfbml      : true,
+			  version    : 'v2.8'
+			});
+			FB.AppEvents.logPageView();
+		};
+
+		(function(d, s, id){
+		 var js, fjs = d.getElementsByTagName(s)[0];
+		 if (d.getElementById(id)) {return;}
+		 js = d.createElement(s); js.id = id;
+		 js.src = "//connect.facebook.net/en_US/sdk.js";
+		 fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+
+		// Parse.User.logOut().then(() => {
+		//   var currentUser = Parse.User.current();  // this will now be null
+		// });
+		var user = Parse.User.current();
+	    console.log(JSON.stringify(user));
+
+		$(function() {
+			$("#signup").submit(function(e){
+				e.preventDefault();
+				// validacao do usuario e senha
+				var username = $("#Login").val();
+				var password = $("#Senha").val();
+				var user = new Parse.User();
+				user.set("username", username);
+				user.set("password", password);
+				user.set("email", "email@example.com");
+				user.signUp(null, {
+				  success: function(user) {
+				  	this.user = user;
+				    console.log(JSON.stringify(user));
+				  },
+				  error: function(user, error) {
+				    console.log("Error: " + error.code + " " + error.message);
+				  }
+				});
+			});
+		});
+	</script>
+  </body>
+</html>
