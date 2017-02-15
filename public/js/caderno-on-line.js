@@ -1,5 +1,5 @@
 Parse.initialize("caderno7259"); 
-Parse.serverURL = 'http://caderno-on-line.herokuapp.com/parse';
+Parse.serverURL = 'https://caderno-on-line.herokuapp.com/parse';
 
 var Instituicao = Parse.Object.extend("Instituicao");
 var Disciplina = Parse.Object.extend("Disciplina");

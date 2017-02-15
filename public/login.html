@@ -84,7 +84,7 @@
 			$("#signup").submit(function(e){
 				e.preventDefault();
 
-				Parse.FacebookUtils.logIn(null, {
+				Parse.FacebookUtils.logIn("email", {
 				  success: function(user) {
 				  	console.log(JSON.stringify(user));
 				    if (!user.existed()) {
