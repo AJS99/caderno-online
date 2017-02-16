@@ -1,229 +1,199 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<title>CadernOnline Login</title>
+	<title>Login | CadernOnline</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="assets/images/parse-logo.png">
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/login-estilo.css">
 </head>
 
 <body>
-	<section class="container ">
+	<div class="container ">
 		<h2 class="text-center"> Bem vindo ao CadernOnline</h2>
-	</section>
-	<section>
-		<div class="container">    
-			<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<div class="panel-title">Entrar</div>
-						<div id="esqueceu-senha"><a href="#">Esqueci minha senha</a></div>
-					</div>
-					<div class="panel-body" >
-						<div id="login-alert" class="alert alert-danger col-sm-12"></div>
+	</div>
+	<div class="container">
+		<section>
+			<div class="row">    
+				<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="panel-title">Entrar</div>
+							<div id="esqueceu-senha"><a href="#">Esqueci minha senha</a></div>
+						</div>
+						<div class="panel-body" >
+							<div id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-						<form id="loginform signup" class="form-horizontal" role="form">		
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								<input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Seu e-mail ou usuário">
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								<input id="login-password" type="password" class="form-control" name="password" placeholder="Sua senha">
-							</div>
-							<div class="input-group">
-								<div class="checkbox">
-									<label>
-								 		 <input id="login-remember" type="checkbox" name="remember" value="1"> Lembrar-me
-									</label>
-							  </div>
-							</div>
-
-							<div class="form-group">
-								<!-- Button -->
-								<div class="col-sm-12 controls">
-									<a id="btn-login" href="#" class="btn btn-success">Entrar  </a>
-								 	<a id="btn-fblogin" href="#" type="submit" class="btn btn-primary">Entrar com o Facebook</a>
+							<form id="loginform signup" class="form-horizontal" role="form">		
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Seu e-mail ou usuário">
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12 control">
-									<div id="nao-tenho-conta">
-										Não tem uma conta? 
-									<a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-										Cadastre-se aqui</a>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+									<input id="login-password" type="password" class="form-control" name="password" placeholder="Sua senha">
+								</div>
+								<div class="input-group">
+									<div class="checkbox">
+										<label>
+									 		 <input id="login-remember" type="checkbox" name="remember" value="1"> Lembrar-me
+										</label>
+								  </div>
+								</div>
+
+								<div class="form-group">
+									
+									<div class="col-sm-12 controls">
+										<a id="btn-login" href="#" type="submit" class="btn btn-success">Entrar  </a>
+									 	<a id="btn-fblogin" href="#" type="submit" class="btn btn-primary">Entrar com o Facebook</a> 
 									</div>
 								</div>
-							</div>
-						</form>
+								<div class="form-group">
+									<div class="col-md-12 control">
+										<div id="nao-tenho-conta">
+											Não tem uma conta? 
+										<a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+											Cadastre-se aqui</a>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
+				<div id="signupbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="panel-title">Cadastro</div>
+							<div id="entrar"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Entrar</a></div>
+						</div>  
+						<div class="panel-body" >
+							<form id="signupform" class="form-horizontal" role="form">
+								<div id="signupalert" class="alert alert-danger">
+									<p>Error:</p>
+									<span></span>
+								</div>
+								<div class="form-group">
+									<label id="email" class="col-md-3 control-label">Email</label>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="email" placeholder="Seu e-mail">
+									</div>
+								</div>
+									
+								<div class="form-group">
+									<label id="firstname" class="col-md-3 control-label">Nome</label>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="firstname" placeholder="Seu nome">
+									</div>
+								</div>
+								<div class="form-group">
+									<label id="lastname" class="col-md-3 control-label">Sobrenome</label>
+									<div class="col-md-9">
+										<input type="text" class="form-control" name="lastname" placeholder="Seu sobrenome">
+									</div>
+								</div>
+								<div class="form-group">
+									<label id="password" class="col-md-3 control-label">Senha</label>
+									<div class="col-md-9">
+										<input type="password" class="form-control" name="passwd" placeholder="Sua senha">
+									</div>
+								</div>
+
+								<div class="form-group">                                  
+									<div class="col-md-offset-3 col-md-9">
+										<button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Cadastrar</button>
+										<span id="cadastro-opcao">ou</span>  
+									</div>
+								</div>
+								
+								<div id="separador" class="form-group">
+									
+									<div class="col-md-offset-3 col-md-9">
+										<button id="btn-fbsignup" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Cadastre-se com Facebook</button>
+									</div>   
+								</div> 
+							</form>
+						 </div>
+					</div>
+				</div> 
 			</div>
-			<div id="signupbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<div class="panel-title">Cadastro</div>
-						<div id="entrar"><a id="signinlink" href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Entrar</a></div>
-					</div>  
-					<div class="panel-body" >
-						<form id="signupform" class="form-horizontal" role="form">
-							<div id="signupalert" class="alert alert-danger">
-								<p>Error:</p>
-								<span></span>
-							</div>
-							<div class="form-group">
-								<label for="email" class="col-md-3 control-label">Email</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="email" placeholder="Seu e-mail">
-								</div>
-							</div>
-								
-							<div class="form-group">
-								<label for="firstname" class="col-md-3 control-label">Nome</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="firstname" placeholder="Seu nome">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="lastname" class="col-md-3 control-label">Sobrenome</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="lastname" placeholder="Seu sobrenome">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="password" class="col-md-3 control-label">Senha</label>
-								<div class="col-md-9">
-									<input type="password" class="form-control" name="passwd" placeholder="Sua senha">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<!-- Button -->                                        
-								<div class="col-md-offset-3 col-md-9">
-									<button id="btn-signup" type="button" class="btn btn-info"><i class="icon-hand-right"></i> &nbsp Cadastrar</button>
-									<span id="cadastro-opcao">ou</span>  
-								</div>
-							</div>
-							
-							<div id="separador" class="form-group">
-								
-								<div class="col-md-offset-3 col-md-9">
-									<button id="btn-fbsignup" type="submit" class="btn btn-primary"><i class="icon-facebook"></i>   Cadastre-se com Facebook</button>
-								</div>   
-							</div> 
-						</form>
-					 </div>
-				</div>
-			</div> 
-		</div>
-	</section>
-<!-- <div class="container">
-	<div class="row text-center">
-		<div class="col-md-6">
-			<br /><br />
-			<h2> Bem vindo ao CadernOnline</h2>
-
-			<h5>(Utilize seu Login Para Acesso)</h5>
-			<br />
-		</div>
+		</section>
 	</div>
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<strong>  Preencha os Campos Abaixo  </strong>  
-				</div>
-				<div class="panel-body">
-					<form role="form" action="" method="POST" name="Acesso" id="signup">
-						<br />
-						<div class="form-group input-group">
-							<span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-							<input type="text" name="Login" id="Login" class="form-control" placeholder="Seu Login" required/>
-						</div>
-						<div class="form-group input-group">
-							<span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-							<input type="password" name="Senha" id="Senha" class="form-control"  placeholder="*******" required />
-						</div>
-						<div class="form-group">
-							<label class="checkbox-inline">
-								<input type="checkbox" /> Lembrar-me
-							</label>
-							<span class="pull-right">
-								<a href="#" >Esqueci Minha Senha </a> 
-							</span>
-						</div>
-						<button type="submit" name="Acessar" id="Acessar" class="btn btn-primary">Acessar</button>          <button type="reset" class="btn btn-primary">Cancelar</button>
-						<hr />                                
-					</form>
-				</div>
-			</div>
-		</div>
-		</div>
-	</div> -->
+	
 
 <script src="js/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/parse.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/caderno-on-line.js"></script>
+
 <script type="text/javascript">
-	window.fbAsyncInit = function() {
-		Parse.FacebookUtils.init({
-		  appId      : '707119556132405',
-		  xfbml      : true,
-		  version    : 'v2.8'
-		});
-		FB.AppEvents.logPageView();
-	};
+	// window.fbAsyncInit = function() {
+	// 	Parse.FacebookUtils.init({
+	// 	  appId      : '707119556132405',
+	// 	  xfbml      : true,
+	// 	  version    : 'v2.8'
+	// 	});
+	// 	FB.AppEvents.logPageView();
+	// };
 
-	(function(d, s, id){
-	 var js, fjs = d.getElementsByTagName(s)[0];
-	 if (d.getElementById(id)) {return;}
-	 js = d.createElement(s); js.id = id;
-	 js.src = "//connect.facebook.net/en_US/sdk.js";
-	 fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
+	// (function(d, s, id){
+	//  var js, fjs = d.getElementsByTagName(s)[0];
+	//  if (d.getElementById(id)) {return;}
+	//  js = d.createElement(s); js.id = id;
+	//  js.src = "//connect.facebook.net/en_US/sdk.js";
+	//  fjs.parentNode.insertBefore(js, fjs);
+	// }(document, 'script', 'facebook-jssdk'));
 
 
-	// Parse.User.logOut().then(() => {
-	//   var currentUser = Parse.User.current();  // this will now be null
-	// });
-	var user = Parse.User.current();
-	console.log(JSON.stringify(user));
+	// // Parse.User.logOut().then(() => {
+	// //   var currentUser = Parse.User.current();  // this will now be null
+	// // });
+	// var user = Parse.User.current();
+	// console.log(JSON.stringify(user));
 
+	// $(function() {
+	// 	$("#signup").submit(function(e){
+	// 		e.preventDefault();
+
+	// 		Parse.FacebookUtils.logIn("email", {
+	// 		  success: function(user) {
+	// 			console.log(JSON.stringify(user));
+	// 			if (!user.existed()) {
+	// 			  console.log("User signed up and logged in through Facebook!");
+	// 			} else {
+	// 			  console.log("User logged in through Facebook!");
+	// 			}
+	// 		  },
+	// 		  error: function(user, error) {
+	// 			console.log("User cancelled the Facebook login or did not fully authorize.");
+	// 		  }
+	// 		});
+			
+			// validacao do usuario e senha
 	$(function() {
-		$("#signup").submit(function(e){
-			e.preventDefault();
+			$("#signupform").submit(function(e){
+		e.preventDefault();
+			var username = $("#firstname").val() + " " + $("#lastname").val();
+			var password = $("#password").val();
+			var email = $("#email").val();
+			console.log(username);
+			console.log(email);
+			console.log(password);
 
-			Parse.FacebookUtils.logIn("email", {
+			var user = new Parse.User();
+			user.set("username", username);
+			user.set("password", password);
+			user.set("email", email);
+			user.signUp(null, {
 			  success: function(user) {
-				console.log(JSON.stringify(user));
-				if (!user.existed()) {
-				  console.log("User signed up and logged in through Facebook!");
-				} else {
-				  console.log("User logged in through Facebook!");
-				}
+			  	this.user = user;
+			    console.log(JSON.stringify(user));
 			  },
 			  error: function(user, error) {
-				console.log("User cancelled the Facebook login or did not fully authorize.");
+			    console.log("Error: " + error.code + " " + error.message);
 			  }
 			});
-
-			// validacao do usuario e senha
-			// var username = $("#Login").val();
-			// var password = $("#Senha").val();
-			// var user = new Parse.User();
-			// user.set("username", username);
-			// user.set("password", password);
-			// user.set("email", "email@example.com");
-			// user.signUp(null, {
-			//   success: function(user) {
-			//   	this.user = user;
-			//     console.log(JSON.stringify(user));
-			//   },
-			//   error: function(user, error) {
-			//     console.log("Error: " + error.code + " " + error.message);
-			//   }
-			// });
 		});
 	});
 </script>
