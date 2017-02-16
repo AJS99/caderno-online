@@ -167,33 +167,35 @@
 				console.log("User cancelled the Facebook login or did not fully authorize.");
 			  }
 			});
+		});
+	});	
 			
 	// Cadastro - Manual
-	$(function() {
-			$("#signupform").submit(function(e){
-		e.preventDefault();
-			var username = $("#firstname").val() + " " + $("#lastname").val();
-			var password = $("#password").val();
-			var email = $("#email").val();
-			console.log(username);
-			console.log(email);
-			console.log(password);
+	// $(function() {
+	// 		$("#signupform").submit(function(e){
+	// 	e.preventDefault();
+	// 		var username = $("#firstname").val() + " " + $("#lastname").val();
+	// 		var password = $("#password").val();
+	// 		var email = $("#email").val();
+	// 		console.log(username);
+	// 		console.log(email);
+	// 		console.log(password);
 
-			var user = new Parse.User();
-			user.set("username", username);
-			user.set("password", password);
-			user.set("email", email);
-			user.signUp(null, {
-			  success: function(user) {
-			  	this.user = user;
-			    console.log(JSON.stringify(user));
-			  },
-			  error: function(user, error) {
-			    console.log("Error: " + error.code + " " + error.message);
-			  }
-			});
-		});
-	});
+	// 		var user = new Parse.User();
+	// 		user.set("username", username);
+	// 		user.set("password", password);
+	// 		user.set("email", email);
+	// 		user.signUp(null, {
+	// 		  success: function(user) {
+	// 		  	this.user = user;
+	// 		    console.log(JSON.stringify(user));
+	// 		  },
+	// 		  error: function(user, error) {
+	// 		    console.log("Error: " + error.code + " " + error.message);
+	// 		  }
+	// 		});
+	// 	});
+	// });
 </script>
 </body>
 </html>
