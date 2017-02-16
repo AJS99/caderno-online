@@ -75,28 +75,28 @@
 									<span></span>
 								</div>
 								<div class="form-group">
-									<label id="email" class="col-md-3 control-label">Email</label>
+									<label for="email" class="col-md-3 control-label">Email</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="email" placeholder="Seu e-mail">
+										<input type="text" id="email" class="form-control" name="email" placeholder="Seu e-mail">
 									</div>
 								</div>
 									
 								<div class="form-group">
-									<label id="firstname" class="col-md-3 control-label">Nome</label>
+									<label for="firstname" class="col-md-3 control-label">Nome</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="firstname" placeholder="Seu nome">
+										<input type="text" id="firstname" class="form-control" name="firstname" placeholder="Seu nome">
 									</div>
 								</div>
 								<div class="form-group">
-									<label id="lastname" class="col-md-3 control-label">Sobrenome</label>
+									<label for="lastname" class="col-md-3 control-label">Sobrenome</label>
 									<div class="col-md-9">
-										<input type="text" class="form-control" name="lastname" placeholder="Seu sobrenome">
+										<input type="text" id="lastname" class="form-control" name="lastname" placeholder="Seu sobrenome">
 									</div>
 								</div>
 								<div class="form-group">
-									<label id="password" class="col-md-3 control-label">Senha</label>
+									<label for="password" class="col-md-3 control-label">Senha</label>
 									<div class="col-md-9">
-										<input type="password" class="form-control" name="passwd" placeholder="Sua senha">
+										<input type="password" id="password" class="form-control" name="passwd" placeholder="Sua senha">
 									</div>
 								</div>
 
@@ -128,49 +128,47 @@
 <script src="js/caderno-on-line.js"></script>
 
 <script type="text/javascript">
-	// window.fbAsyncInit = function() {
-	// 	Parse.FacebookUtils.init({
-	// 	  appId      : '707119556132405',
-	// 	  xfbml      : true,
-	// 	  version    : 'v2.8'
-	// 	});
-	// 	FB.AppEvents.logPageView();
-	// };
+	window.fbAsyncInit = function() {
+		Parse.FacebookUtils.init({
+		  appId      : '707119556132405',
+		  xfbml      : true,
+		  version    : 'v2.8'
+		});
+		FB.AppEvents.logPageView();
+	};
 
-	// (function(d, s, id){
-	//  var js, fjs = d.getElementsByTagName(s)[0];
-	//  if (d.getElementById(id)) {return;}
-	//  js = d.createElement(s); js.id = id;
-	//  js.src = "//connect.facebook.net/en_US/sdk.js";
-	//  fjs.parentNode.insertBefore(js, fjs);
-	// }(document, 'script', 'facebook-jssdk'));
+	(function(d, s, id){
+	 var js, fjs = d.getElementsByTagName(s)[0];
+	 if (d.getElementById(id)) {return;}
+	 js = d.createElement(s); js.id = id;
+	 js.src = "//connect.facebook.net/en_US/sdk.js";
+	 fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	// Parse.User.logOut().then(() => {
+	//   var currentUser = Parse.User.current();  // this will now be null
+	// });
+	var user = Parse.User.current();
+	console.log(JSON.stringify(user));
 
+	$(function() {
+		$("#signup").submit(function(e){
+			e.preventDefault();
 
-	// // Parse.User.logOut().then(() => {
-	// //   var currentUser = Parse.User.current();  // this will now be null
-	// // });
-	// var user = Parse.User.current();
-	// console.log(JSON.stringify(user));
-
-	// $(function() {
-	// 	$("#signup").submit(function(e){
-	// 		e.preventDefault();
-
-	// 		Parse.FacebookUtils.logIn("email", {
-	// 		  success: function(user) {
-	// 			console.log(JSON.stringify(user));
-	// 			if (!user.existed()) {
-	// 			  console.log("User signed up and logged in through Facebook!");
-	// 			} else {
-	// 			  console.log("User logged in through Facebook!");
-	// 			}
-	// 		  },
-	// 		  error: function(user, error) {
-	// 			console.log("User cancelled the Facebook login or did not fully authorize.");
-	// 		  }
-	// 		});
+			Parse.FacebookUtils.logIn("email", {
+			  success: function(user) {
+				console.log(JSON.stringify(user));
+				if (!user.existed()) {
+				  console.log("User signed up and logged in through Facebook!");
+				} else {
+				  console.log("User logged in through Facebook!");
+				}
+			  },
+			  error: function(user, error) {
+				console.log("User cancelled the Facebook login or did not fully authorize.");
+			  }
+			});
 			
-			// validacao do usuario e senha
+	// Cadastro - Manual
 	$(function() {
 			$("#signupform").submit(function(e){
 		e.preventDefault();
