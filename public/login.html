@@ -11,7 +11,7 @@
 
 <body>
 	<div class="container ">
-		<h2 class="text-center"> Bem vindo ao CadernOnline</h2>
+		<h2 class="text-center"> Faça seu login e boa aula!</h2>
 	</div>
 	<div class="container">
 		<section>
@@ -25,28 +25,21 @@
 						<div class="panel-body" >
 							<div id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-							<form id="loginform signup" class="form-horizontal" role="form">		
+							<form id="loginform signup" class="form-horizontal" action="http://localhost/public/index.html" method="get" role="form">		
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-									<input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Seu e-mail ou usuário">
+									<input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Seu e-mail ou usuário" required>
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-									<input id="login-password" type="password" class="form-control" name="password" placeholder="Sua senha">
-								</div>
-								<div class="input-group">
-									<div class="checkbox">
-										<label>
-									 		 <input id="login-remember" type="checkbox" name="remember" value="1"> Lembrar-me
-										</label>
-								  </div>
+									<input id="login-password" type="password" class="form-control" name="password" placeholder="Sua senha" required>
 								</div>
 
 								<div class="form-group">
 									
 									<div class="col-sm-12 controls">
-										<a id="btn-login" href="#" type="submit" class="btn btn-success">Entrar  </a>
-									 	<a id="btn-fblogin" href="#" type="submit" class="btn btn-primary">Entrar com o Facebook</a> 
+										<input  name="entrar" value="Entrar" id="btn-login" type="submit" class="btn btn-success">
+									 	<a href="http://localhost/public/index.html" name="facebook" id="btn-fblogin" class="btn btn-primary"> Entrar com Facebook</a>
 									</div>
 								</div>
 								<div class="form-group">
@@ -77,41 +70,32 @@
 								<div class="form-group">
 									<label for="email" class="col-md-3 control-label">Email</label>
 									<div class="col-md-9">
-										<input type="text" id="email" class="form-control" name="email" placeholder="Seu e-mail">
+										<input type="text" id="email" class="form-control" name="email" placeholder="Seu e-mail" required>
 									</div>
 								</div>
 									
 								<div class="form-group">
 									<label for="firstname" class="col-md-3 control-label">Nome</label>
 									<div class="col-md-9">
-										<input type="text" id="firstname" class="form-control" name="firstname" placeholder="Seu nome">
+										<input type="text" id="firstname" class="form-control" name="firstname" placeholder="Seu nome" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="lastname" class="col-md-3 control-label">Sobrenome</label>
 									<div class="col-md-9">
-										<input type="text" id="lastname" class="form-control" name="lastname" placeholder="Seu sobrenome">
+										<input type="text" id="lastname" class="form-control" name="lastname" placeholder="Seu sobrenome" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="password" class="col-md-3 control-label">Senha</label>
 									<div class="col-md-9">
-										<input type="password" id="password" class="form-control" name="passwd" placeholder="Sua senha">
+										<input type="password" id="password" class="form-control" name="passwd" placeholder="Sua senha" required>
 									</div>
-								</div>
-
-								<div class="form-group">                                  
+								</div>								
+								<div class="form-group">
 									<div class="col-md-offset-3 col-md-9">
-										<button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Cadastrar</button>
-										<span id="cadastro-opcao">ou</span>  
-									</div>
-								</div>
-								
-								<div id="separador" class="form-group">
-									
-									<div class="col-md-offset-3 col-md-9">
-										<button id="btn-fbsignup" type="button" class="btn btn-primary"><i class="icon-facebook"></i>   Cadastre-se com Facebook</button>
-									</div>   
+										<button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Cadastrar</button> 
+									</div>  
 								</div> 
 							</form>
 						 </div>
@@ -121,13 +105,15 @@
 		</section>
 	</div>
 	
-
 <script src="js/jquery.js"></script>
 <script src="js/parse.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/slug.js"></script>
+<script src="js/util.js"></script>
 <script src="js/caderno-on-line.js"></script>
 
 <script type="text/javascript">
+ // Capiturar o  
 	window.fbAsyncInit = function() {
 		Parse.FacebookUtils.init({
 		  appId      : '707119556132405',
@@ -144,24 +130,34 @@
 	 js.src = "//connect.facebook.net/en_US/sdk.js";
 	 fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
-	// Parse.User.logOut().then(() => {
-	//   var currentUser = Parse.User.current();  // this will now be null
-	// });
-	var user = Parse.User.current();
-	console.log(JSON.stringify(user));
+
 
 	$(function() {
-		$("#signup").submit(function(e){
+		$("#btn-fblogin").click(function(e){
 			e.preventDefault();
 
 			Parse.FacebookUtils.logIn("email", {
 			  success: function(user) {
-				console.log(JSON.stringify(user));
-				if (!user.existed()) {
-				  console.log("User signed up and logged in through Facebook!");
-				} else {
-				  console.log("User logged in through Facebook!");
-				}
+	  			var profileImageUrl = "http://graph.facebook.com/"+ user.attributes.authData.facebook.id +"/picture?type=large";
+	  			FB.api('/me', 'get', {fields: "name, email"}, function(response){
+	  				user.set("name", response.name);
+	  				user.set("username", response.email);
+	  				user.set("email", response.email);
+	  				user.set("profileImageUrl", profileImageUrl);
+	  				user.save(null, {
+					  success: function(obj) {
+					    if (!user.existed()) {
+						  alert("User signed up and logged in through Facebook!");
+						} else {
+						  alert("User logged in through Facebook!");
+						  window.location.href="http://localhost/public/index.html";
+						}
+					  },
+					  error: function(obj, error) {
+					    alert('Failed to create new object, with error code: ' + error.message);
+					  }
+					});
+	  			});
 			  },
 			  error: function(user, error) {
 				console.log("User cancelled the Facebook login or did not fully authorize.");
@@ -171,31 +167,58 @@
 	});	
 			
 	// Cadastro - Manual
-	// $(function() {
-	// 		$("#signupform").submit(function(e){
-	// 	e.preventDefault();
-	// 		var username = $("#firstname").val() + " " + $("#lastname").val();
-	// 		var password = $("#password").val();
-	// 		var email = $("#email").val();
-	// 		console.log(username);
-	// 		console.log(email);
-	// 		console.log(password);
+	$(function() {
 
-	// 		var user = new Parse.User();
-	// 		user.set("username", username);
-	// 		user.set("password", password);
-	// 		user.set("email", email);
-	// 		user.signUp(null, {
-	// 		  success: function(user) {
-	// 		  	this.user = user;
-	// 		    console.log(JSON.stringify(user));
-	// 		  },
-	// 		  error: function(user, error) {
-	// 		    console.log("Error: " + error.code + " " + error.message);
-	// 		  }
-	// 		});
-	// 	});
+		$("#signupform").submit(function(e){
+			e.preventDefault();
+			var name = $("#firstname").val() + " " + $("#lastname").val();
+			var username = $("#email").val();
+			var password = $("#password").val();
+			var email = $("#email").val();
+			console.log(username);
+			console.log(email);
+			console.log(password);
+
+			var user = new Parse.User();
+			user.set("name", name);
+			user.set("username", username);
+			user.set("password", password);
+			user.set("email", email);
+			user.signUp(null, {
+			  success: function(user) {
+			  	this.user = user;
+			    console.log(JSON.stringify(user));
+			  },
+			  error: function(user, error) {
+			    console.log("Error: " + error.code + " " + error.message);
+			  }
+			});
+		});
+	});
+
+	$(function() {
+		$("#btn-login").click(function(e){
+			e.preventDefault();
+
+			Parse.User.logIn( $('#login-username').val(), $('#login-password').val(), {
+			success: function(user) {
+					  alert("Logado com sucesso");
+					  window.location.href="http://localhost/public/index.html";
+			},
+			error: function(user, error) {
+				console.log(JSON.stringify(error));
+				alert("Usuário não encontrado!");
+			}
+		});
+	});
+});		
+	
+	//Logout botão sair
+	// Parse.User.logOut().then(() => {
+	//   var currentUser = Parse.User.current();  // this will now be null
 	// });
+	//var user = Parse.User.current();
+	//console.log(JSON.stringify(user));
 </script>
 </body>
 </html>
