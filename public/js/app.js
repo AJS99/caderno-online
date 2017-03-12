@@ -1,15 +1,15 @@
 const router = new VueRouter({
   	routes: [
-	  { path: '/' },
-    { path: '/entrar' },
-    { path: '/cadastro' },
-    { path: '/dashboard' },
-	  { path: '/sobre' },
-	  { path: '/instituicao/:id' },
-	  { path: '/curso/:id' },
-	  { path: '/disciplina/:id' },
-	  { path: '/anotacao/:id' },
-	  { path: '*' }
+  	  { path: '/' },
+      { path: '/entrar' },
+      { path: '/cadastro' },
+      { path: '/dashboard' },
+  	  { path: '/sobre' },
+  	  { path: '/instituicao/:id' },
+  	  { path: '/curso/:id' },
+  	  { path: '/disciplina/:id' },
+  	  { path: '/anotacao/:id' },
+  	  { path: '*' }
     ] 
 })
 
@@ -69,3 +69,76 @@ new Vue({
     notFound: httpVueLoader('js/components/notFound.vue')
   }
 })
+
+// Auth.login("teste12@teste.com", "123",
+//     function(obj) {
+//       console.log(obj)
+//       console.log(Auth.isLoggedIn())
+//     },
+//     function(error) {
+//       console.log(error)
+//     }
+// )
+
+// Auth.logout(function(){
+//   console.log(Auth.isLoggedIn())
+// })
+
+// Auth.signup({
+//     "name": "nome4",
+//     "email": "nome4@nome.com",
+//     "username": "nome4@nome.com",
+//     "password": "123"
+//   },
+//   function(obj) {
+//     console.log(obj)
+//     console.log(Auth.isLoggedIn())
+//   },
+//   function(error) {
+//     console.log(error)
+//   }
+// )
+
+// Auth.facebookLogin(
+//   function(obj) {
+//     console.log(obj)
+//     console.log(Auth.isLoggedIn())
+//   },
+//   function(error) {
+//     console.log(error)
+//   }
+// )
+  
+
+// Api.create({
+//       "nome": "nome3",
+//       "nomeCoordenador": "coordenador3",
+//       "descricao": "desc3"
+//     }, 
+//     new CursoClass(),
+//     function(obj) {
+//       alert('New object created with objectId: ' + obj.id);
+//     },
+//     function(error) {
+//       alert('Failed to create new object, with error code: ' + error.message);
+//     }
+// )
+
+// Api.getByKey("nome", "nome3", CursoClass,
+//   function(obj) {
+//     Api.delete(obj)
+//   },
+//   function(error) {
+//     console.log('Failed to create new object, with error code: ' + error.message);
+//   }
+// )
+
+// Api.getAll(InstituicaoClass, "nome",
+//    function(obj) {
+//     console.log(obj);
+//     console.log(obj[0].get("nome"));
+//   },
+//   function(error) {
+//     console.log('Failed to create new object, with error code: ' + error.message);
+//   }
+// )
