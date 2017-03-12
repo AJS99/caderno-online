@@ -1,7 +1,7 @@
 <template>
 	<div>
     	<h1>ENTRAR</h1>
-	    <a v-on:click="login" href="#">Entrar</a>
+	    <a v-on:click="login">Entrar</a>
 	    <a v-on:click="facebookLogin">Facebook</a>
     </div>
 </template>
@@ -14,7 +14,7 @@ module.exports = {
         }
     },
 	created: function() {
-		console.log("ENTRAR 2")
+		console.log("ENTRAR")
 	},
 	methods: {
 		login: function(){
