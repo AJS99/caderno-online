@@ -63,10 +63,13 @@ var Auth = {
 	login: function(email, password, successCallback, errorCallback){
 		Parse.User.logIn(email, password, {
 			success: function(user) {
-				successCallback(user)
+				console.log("Usuário e senha Válidos - LOGIN SUCESSO");
+				console.log(user);
+				successCallback(user);
 			},
 			error: function(user, error) {
-			   	errorCallback(error)
+				console.log("Usuário ou senha Inválidos");
+			   	errorCallback(error);
 			}
 		})
 	},

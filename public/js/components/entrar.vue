@@ -18,8 +18,9 @@ module.exports = {
 	},
 	methods: {
 		login: function(){
-			Auth.login("teste12@teste.com", "123", function(user){
-				router.push('/dashboard')
+			Auth.login("teste12@teste.com", "12345345343", function(user){
+				router.push('/dashboard');
+				console.log(user)
 			}, function(error){
 				console.log(error)
 			})

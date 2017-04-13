@@ -111,11 +111,11 @@ new Vue({
   
 
 // Api.create({
-//       "nome": "nome3",
-//       "nomeCoordenador": "coordenador3",
-//       "descricao": "desc3"
+//       "nome": "ETE Limoeiro",
+//       "descricao": "Escola Técnica Estadual - José Humberto de Moura Cavalcanti"
+
 //     }, 
-//     new CursoClass(),
+//     new InstituicaoClass(),
 //     function(obj) {
 //       alert('New object created with objectId: ' + obj.id);
 //     },
@@ -124,7 +124,19 @@ new Vue({
 //     }
 // )
 
-// Api.getByKey("nome", "nome3", CursoClass,
+
+// Api.getById("SjCSFGxSzC", AnotacaoClass, 
+//   function(obj){
+//     console.log("tudo certo");
+//     obj.set("assunto", "variareis php");
+//     Api.update(obj)
+//   },
+//   function(error) {
+//     console.log('Failed to create new object, with error code: ' + error.message);
+//   }
+// )
+
+// Api.getByKey("assunto", "variareis php", AnotacaoClass,
 //   function(obj) {
 //     Api.delete(obj)
 //   },
@@ -136,7 +148,7 @@ new Vue({
 // Api.getAll(InstituicaoClass, "nome",
 //    function(obj) {
 //     console.log(obj);
-//     console.log(obj[0].get("nome"));
+//     console.log(obj[11].get("nome"));
 //   },
 //   function(error) {
 //     console.log('Failed to create new object, with error code: ' + error.message);

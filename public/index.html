@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<title>Parse Server Example</title>
+	<title>CadernOnline | Gerenciador Acadêmico</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
 
   <body>
-	<div id="app" class="container">
 
+	<div id="app" class="container">
 		<div class="row text-center">
 			<div class="col-md-12">
-				<h2>Bem vindo ao CadernOnline</h2>
-				<ul>
-					<li v-for="item in menu">
-						<router-link :to="item.url">{{ item.name }}</router-link>
-					</li>
-				</ul>
+				<nav class="navbar navbar-default">
+					<div class="container">
+						<div class="navber-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-navbar" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a href="#" class="navbar-brand">CadernOnline</a>
+						</div>
+
+						<div id="collapse-navbar" class="collapse navbar-collapse navbar-right">
+							<ul class="nav nav-tabs">
+								<li v-for="item in menu">
+									<router-link :to="item.url">{{ item.name }}</router-link>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
 			</div>
 		</div>
 
-	    <component v-bind:is="currentView"></component>
+	    <component v-bind:is="currentView"></comsponent>
 
 	</div>
+
 	<script type="text/javascript" src="js/libs/jquery.js"></script>
 	<script type="text/javascript" src="js/libs/parse.js"></script>
 	<script type="text/javascript" src="js/libs/vue.js"></script>
