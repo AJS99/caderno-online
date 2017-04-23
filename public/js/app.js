@@ -18,10 +18,11 @@ new Vue({
   router: router,
   data: {
     currentView: 'home',
+
     menu: [ 
-      { name: "Home", url: "/" },
-      { name: "Dashboard", url: "/dashboard" },
-      { name: "Sobre", url: "/sobre" },
+      { name: "Home", url: "/"},
+      { name: "Dashboard", url: "/dashboard"},
+      { name: "Sobre", url: "/sobre"}
     ]
   },
   created: function () {

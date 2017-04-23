@@ -1,9 +1,50 @@
-.head{
-    display: none;
+#home-fundo{
+    background-image: url(../images/home-page/Background-home-page-1.jpg);
+    background-size: cover;
+    background-position: top center;
+    height: 100%;
+    width: 86.6%;
+    position: absolute;
+   }
+
+#home-p {
+    margin-top: 8px;
+    font-size: 20px;
+    font-size: 1.95rem;
+    color: #646964;
 }
 
-body{
+.home-wrap {
+    display: block;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 20px;
+    margin-top: 200px;
+    text-align: center;
+}
+
+.logo {
+    width: 516px;
+    margin: 0 auto;
+    margin-top: 80px;
+    color: #646964;
+    position: relative;
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.navbar{
+    z-index: 3;
+    background-color: #FFF;
+}
+
+body {
     background-color: #f1f3f4;
+    margin: 0px;
 }
 
 .header .container {
@@ -80,5 +121,4 @@ body{
     max-width: 1200px;
     margin-bottom: 1em;
 }
-
 
