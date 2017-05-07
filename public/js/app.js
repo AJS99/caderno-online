@@ -13,11 +13,17 @@ const router = new VueRouter({
     ] 
 })
 
+Vue.component('modal', {
+  template: '#modal-template'
+})
+
 new Vue({
   el: '#app',
   router: router,
   data: {
     currentView: 'home',
+
+    showModal: false,
 
     menu: [ 
       { name: "Home", url: "/"},

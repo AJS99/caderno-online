@@ -6,7 +6,7 @@
 					<div class="contentBox-title">
 						<h1>Sua última instuição visitada</h1>
 					</div>
-					<a href="#" class="list-group-item active courseDetailBox-title">
+					<a href="#/curso/G5uW9bv4WO" class="list-group-item active courseDetailBox-title">
 						<h4 class="list-group-item-heading">{{ ultimaInstituicao.get("nome") }}</h4>
 						<p class="list-group-item-text">{{ ultimaInstituicao.get("descricao") }}</p>
 					</a>
@@ -20,7 +20,7 @@
 						<h1>Mais instituições</h1>
 					</div>
 					<div class="col-md-4 list-group" v-for="instituicao in instituicoes">
-						<a href="#" class="list-group-item list-group-item-success courseDetailBox-title">{{ instituicao.get("nome") }}</a>
+						<a href="#/disciplina/o9ApPNkdFl" class="list-group-item list-group-item-success courseDetailBox-title">{{ instituicao.get("nome") }}</a>
 					</div>
 				</div>
 			</div>      

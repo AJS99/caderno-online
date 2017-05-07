@@ -1,4 +1,5 @@
 <template>
+	<div>
 		<header id="home-fundo">
 			<div class="home-wrap"> 
 				<h1 class="logo"><img src="assets/images/home-logo.png"> CadernOnline</h1>
@@ -8,6 +9,7 @@
 				</div> 
 			</div>
 		</header>
+	</div>
 </template>
 
 <script>
@@ -21,5 +23,4 @@ module.exports = {
 		console.log("HOME123");
 	},
 }
-
 </script>
