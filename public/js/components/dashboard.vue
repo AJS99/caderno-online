@@ -1,29 +1,58 @@
 <template>
-	<div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 list-group">
-					<h1 id="page-title">Última instuição visitada</h1>
-					  <a href="#/curso/B6zU7uWbu3" class="list-group-item list-group-item-action flex-column align-items-start active">
-					    <div class="d-flex w-100 justify-content-between">
-					      <h4 class="mb-1">{{ ultimaInstituicao.get("nome") }}</h4>
-					      <small>visto à 3 dias</small>
-					    </div>
-					    <p class="mb-1">{{ ultimaInstituicao.get("descricao") }}</p>
-					  </a>
+	<div id="dashboard" class="container">
+		<div>
+			<div id="ultimos-cadernos" class="row"> 
+				<div class="col s12">
+					<h2>Últimos cadernos</h2>
+					<div class="row">
+				      <div class="col s4" v-for="caderno in ultimosCadernos">
+		        		<a href="#">
+				        	<div class="card-panel teal center-align z-depth-3">
+								<h4 class="truncate">{{caderno.get("nome")}}</h4>
+								<strong class="truncate">{{caderno.get("descricao")}}</strong>
+				        	</div>
+						</a>
+				      </div>
+				    </div>
+				</div>
+			</div>
+
+			<div class="divider"></div>
+
+			<div>
+				<div id="todos-cursos" class="row">
+					<div class="col s12">
+						<h3>Meus cursos</h3>
+						<ul class="collapsible popout" data-collapsible="accordion">
+						    <li v-for="curso in cursos">
+						      <div class="collapsible-header"><i class="material-icons">collections_bookmark</i>{{curso.get("nome")}}</div>
+						      <div class="collapsible-body grey lighten-5">
+								<div class="row">
+							      <div class="col l4" v-for="caderno in cadernos[curso.id]">
+					        		<a href="#">
+							        	<div class="card-panel center-align light-blue darken-1">
+											<h4 class="truncate">{{caderno.get("nome")}}</h4>
+											<strong class="truncate">{{caderno.get("descricao")}}</strong>
+							        	</div>
+									</a>
+							      </div>
+						      	</div>
+						      </div>
+						    </li>
+						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 list-group">
-						<h1 id="page-title">Mais instituições</h1>
-						<div class="col-md-6 list-group" v-for="instituicao in instituicoes">
-							<a href="#/disciplina/o9ApPNkdFl" class="list-group-item list-group-item-success courseDetailBox-title">{{ instituicao.get("nome") }}</a>
-						</div>
-					</div>
-				</div>      
-			</div>
+
+			<div class="fixed-action-btn">
+			    <a class="btn-floating btn-large red">
+			      <i class="large material-icons">add</i>
+			    </a>
+			    <ul>
+			      <li><a class="btn-floating green"><i class="material-icons">collections_bookmark</i></a></li>
+			      <li><a class="btn-floating blue"><i class="material-icons">library_books</i></a></li>
+			    </ul>
+		  </div>
 	</div>  
 </template>
 	
@@ -31,43 +60,42 @@
 module.exports = {
 	data: function() {
 		return {
-			ultimaInstituicao: Api.getById("B6zU7uWbu3", InstituicaoClass,  
-				function(obj){
-					return obj
-				}, 
-				function(error){
-					console.log(error) 
-					return null
-				}),
-			instituicoes: null
+			ultimosCadernos: [],
+			cursos: null,
+			cadernos: []
 		}
 	},
 	created () {
-		var updateHeader = this.updateHeader
-		Api.getById("B6zU7uWbu3", InstituicaoClass,
-			function(obj){
-				updateHeader(obj)
-			}, 
-			function(error){
-				console.log(error) 
-			})
-
-		var updateList = this.updateList
-		Api.getAll(InstituicaoClass, "nome", 
-			function(obj){
-				updateList(obj)
-			}, 
-			function(error){
-				console.log(error) 
-			})
+		var self = this
+		var query = new Parse.Query(CursoClass)
+		query.ascending("nome")
+		query.find({
+		  success: function(cursos) {
+		  	for(var i in cursos){
+	  			cursos[i].get("disciplinas").query().find({
+		    		success: function(disciplinas) {
+		    			var cursoId = null
+		  				if(disciplinas != null && disciplinas.length > 0){
+		  					cursoId = disciplinas[0].get("curso").id
+				    		self.$data.cadernos[cursoId] = disciplinas
+		  				}
+		  				if(cursoId != null && cursos[cursos.length - 1].id == cursoId){
+				  			self.$data.cursos = cursos
+				  		}
+					  },
+				  	error: function(error) {
+						console.log(error) 
+				  	}
+		    	})
+		  	}
+		  },
+		  error: function(error) {
+			console.log(error) 
+		  }
+		});
 	},
 	methods: {
-		updateHeader (obj) {
-			this.ultimaInstituicao = obj
-		},
-		updateList (obj) {
-			this.instituicoes = obj
-		}
+
 	}   
 }
 </script>

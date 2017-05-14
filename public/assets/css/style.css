@@ -116,3 +116,32 @@ body {
     max-width: 1200px;
     margin-bottom: 1em;
 }
+
+.nav-wrapper .dropdown-button {
+    min-width: 180px;
+}
+
+a:hover, a:visited, a:link, a:active {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+}
+
+
+#dashboard #ultimos-cadernos .card-panel,
+#dashboard #todos-cursos .card-panel {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+#dashboard #ultimos-cadernos .card-panel:hover,
+#dashboard #todos-cursos .card-panel:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#todos-cursos {
+    margin-top: 20px;
+}
+
+#todos-cursos .collapsible .collapsible-header {
+    font-size: 22px;
+}

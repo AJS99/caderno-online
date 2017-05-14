@@ -17,14 +17,13 @@ new Vue({
   el: '#app',
   router: router,
   data: {
+    user: Auth.getCurrentUser(),
     currentView: 'home',
-
     showModal: false,
-
     menu: [ 
-      { name: "Home", url: "/"},
-      { name: "Dashboard", url: "/dashboard"},
-      { name: "Sobre", url: "/sobre"}
+      { name: "Dashboard", url: "#/dashboard", icon: "dashboard"},
+      { name: "Perfil", url: "#/profile", icon: "person"},
+      { name: "Sair", url: "#/", icon: "input"}
     ]
   },
   created: function () {
@@ -114,11 +113,11 @@ new Vue({
   
 
 // Api.create({
-//       "nome": "ETE Limoeiro",
-//       "descricao": "Escola Técnica Estadual - José Humberto de Moura Cavalcanti"
-
+//       "nome": "Disciplina Teste",
+//       "descricao": "Descrição Teste"
+//       "curso": 
 //     }, 
-//     new InstituicaoClass(),
+//     new DisciplinaClass(),
 //     function(obj) {
 //       alert('New object created with objectId: ' + obj.id);
 //     },
@@ -128,11 +127,22 @@ new Vue({
 // )
 
 
-// Api.getById("SjCSFGxSzC", AnotacaoClass, 
-//   function(obj){
-//     console.log("tudo certo");
-//     obj.set("assunto", "variareis php");
-//     Api.update(obj)
+// Api.getById("XFexCMIfAz", CursoClass, 
+//   function(curso){
+//     Api.getById("FKwSvSKtNc", DisciplinaClass, 
+//       function(disciplina){
+//         var relation = curso.relation("disciplinas");
+//         relation.add(disciplina);
+//         Api.update(curso, function(obj) {
+//           console.log('Object updated: ' + obj);
+//         }, function(error) {
+//           console.log('Failed to create new object, with error code: ' + error.message);
+//         })
+//       },
+//       function(error) {
+//         console.log('Failed to create new object, with error code: ' + error.message);
+//       }
+//     )
 //   },
 //   function(error) {
 //     console.log('Failed to create new object, with error code: ' + error.message);
