@@ -3,52 +3,62 @@
   <head>
 	<title>CadernOnline | Gerenciador Acadêmico</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+	<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap@next/dist/css/bootstrap.min.css"/>
+	<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
   </head>
 
   <body> 
 	<div id="app">
-		<div class="container">
-			<div class="row text-center">
-				<div class="col-md-12">
-					<nav class="navbar navbar-default">
-						<div class="container">
-							<div class="navber-header">
-								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-navbar" aria-expanded="false">
-									<span class="sr-only">Toggle navigation</span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								</button>
-								<a href="#" class="navbar-brand">CadernOnline</a>
-							</div>
+		<b-navbar toggleable type="inverse" variant="info">
+			<b-nav-toggle target="nav_collapse"></b-nav-toggle>
+			<div class="container">
+				<b-link class="navbar-brand" to="/">
+					<span>CadernOnline</span>
+				</b-link>
 
-							<div id="collapse-navbar" class="collapse navbar-collapse navbar-right">
-								<ul class="nav nav-tabs">
-									<li v-for="item in menu">
-										<router-link :to="item.url">{{ item.name }}</router-link>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</nav>
-				</div>			
-			</div>
-				<component v-bind:is="currentView"></component>
-		</div>
-		
+				<b-collapse is-nav id="nav_collapse">
+					<b-nav is-nav-bar v-for="item in menu">
+						<b-nav-item :to="item.url">{{ item.name }}</b-nav-item>
+					</b-nav>
+				
+					<b-nav is-nav-bar class="ml-auto">
+						<b-nav-item-dropdown right-alignment>
+							<!-- Using text slot -->
+							<template slot="text">
+								<span style="font-weight: bold;">Fazer Login</span>
+							</template>
+							<b-dropdown-item to="#">Profile</b-dropdown-item>
+							<b-dropdown-item to="#">Signout</b-dropdown-item>
+						</b-nav-item-dropdown>
+					</b-nav>
+				</div>
+			</b-collapse>
+		</b-navbar>
+
+		<component v-bind:is="currentView"></component>
 	</div>
 
 	<script type="text/javascript" src="js/libs/jquery.js"></script>
 	<script type="text/javascript" src="js/libs/parse.js"></script>
 	<script type="text/javascript" src="js/libs/vue.js"></script>
+
+	<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+	<script src="//unpkg.com/tether@latest/dist/js/tether.min.js"></script>
+	<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+
 	<script type="text/javascript" src="js/libs/vue-router.js"></script>
 	<script type="text/javascript" src="js/libs/httpVueLoader.js"></script>
 	<script type="text/javascript" src="js/libs/axios.js"></script>
-	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>	
+	<!-- <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>	 -->
 	<script type="text/javascript" src="js/api.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
+
+
   </body>
 </html>

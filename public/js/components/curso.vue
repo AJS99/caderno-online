@@ -1,18 +1,19 @@
 <template>
 	<div>
-		<div class="contentBox container">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-4 list-group">
-					<div class="contentBox-title">
-						<h1>Seus cursos na {{ ultimaInstituicao.get("nome") }}</h1>
+				<div class="col-md-12 list-group">
+					<h1 id="page-title">Cursos da {{ ultimaInstituicao.get("nome") }}</h1>
+					  <a href="#/disciplina/o9ApPNkdFl" class="list-group-item list-group-item-action flex-column align-items-start active">
+					    <div class="d-flex w-100 justify-content-between">
+					      <h4 class="mb-1">{{ ultimaInstituicao.get("nome") }}</h4>
+					      <small>visto à 3 dias</small>
+					    </div>
+					    <p class="mb-1">{{ ultimaInstituicao.get("descricao") }}</p>
+					  </a>
 					</div>
-					<a href="#/disciplina/o9ApPNkdFl" class="list-group-item active courseDetailBox-title">
-						<h4 class="list-group-item-heading">{{ ultimaInstituicao.get("nome") }}</h4>
-						<p class="list-group-item-text">{{ ultimaInstituicao.get("descricao") }}</p>
-					</a>
 				</div>
-			</div>
-		</div>      
+			</div>      
 	</div>  
 </template>
 	

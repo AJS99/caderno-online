@@ -13,10 +13,6 @@ const router = new VueRouter({
     ] 
 })
 
-Vue.component('modal', {
-  template: '#modal-template'
-})
-
 new Vue({
   el: '#app',
   router: router,

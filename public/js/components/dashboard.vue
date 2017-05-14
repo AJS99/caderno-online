@@ -1,30 +1,29 @@
 <template>
 	<div>
-		<div class="contentBox container">
+		<div class="container">
 			<div class="row">
 				<div class="col-md-12 list-group">
-					<div class="contentBox-title">
-						<h1>Sua última instuição visitada</h1>
+					<h1 id="page-title">Última instuição visitada</h1>
+					  <a href="#/curso/B6zU7uWbu3" class="list-group-item list-group-item-action flex-column align-items-start active">
+					    <div class="d-flex w-100 justify-content-between">
+					      <h4 class="mb-1">{{ ultimaInstituicao.get("nome") }}</h4>
+					      <small>visto à 3 dias</small>
+					    </div>
+					    <p class="mb-1">{{ ultimaInstituicao.get("descricao") }}</p>
+					  </a>
 					</div>
-					<a href="#/curso/G5uW9bv4WO" class="list-group-item active courseDetailBox-title">
-						<h4 class="list-group-item-heading">{{ ultimaInstituicao.get("nome") }}</h4>
-						<p class="list-group-item-text">{{ ultimaInstituicao.get("descricao") }}</p>
-					</a>
 				</div>
 			</div>
-		</div>      
-		<div class="contentBox container">
-			<div class="row">
-				<div class="col-md-12 list-group">
-					<div class="contentBox-title">
-						<h1>Mais instituições</h1>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 list-group">
+						<h1 id="page-title">Mais instituições</h1>
+						<div class="col-md-6 list-group" v-for="instituicao in instituicoes">
+							<a href="#/disciplina/o9ApPNkdFl" class="list-group-item list-group-item-success courseDetailBox-title">{{ instituicao.get("nome") }}</a>
+						</div>
 					</div>
-					<div class="col-md-4 list-group" v-for="instituicao in instituicoes">
-						<a href="#/disciplina/o9ApPNkdFl" class="list-group-item list-group-item-success courseDetailBox-title">{{ instituicao.get("nome") }}</a>
-					</div>
-				</div>
-			</div>      
-		</div>
+				</div>      
+			</div>
 	</div>  
 </template>
 	
