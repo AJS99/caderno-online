@@ -61,41 +61,47 @@ module.exports = {
 	data: function() {
 		return {
 			ultimosCadernos: [],
-			cursos: null,
-			cadernos: []
+			cadernos: [],
+			cursos: null
 		}
 	},
 	created () {
-		var self = this
-		var query = new Parse.Query(CursoClass)
-		query.ascending("nome")
-		query.find({
-		  success: function(cursos) {
-		  	for(var i in cursos){
-	  			cursos[i].get("disciplinas").query().find({
-		    		success: function(disciplinas) {
-		    			var cursoId = null
-		  				if(disciplinas != null && disciplinas.length > 0){
-		  					cursoId = disciplinas[0].get("curso").id
-				    		self.$data.cadernos[cursoId] = disciplinas
-		  				}
-		  				if(cursoId != null && cursos[cursos.length - 1].id == cursoId){
-				  			self.$data.cursos = cursos
-				  		}
-					  },
-				  	error: function(error) {
-						console.log(error) 
-				  	}
-		    	})
-		  	}
-		  },
-		  error: function(error) {
-			console.log(error) 
-		  }
-		});
+		this.loadAll()
 	},
 	methods: {
-
+		loadAll: function(){
+			var self = this
+			this.loadCadernos(function(cadernos){
+				self.loadCursos(function(cursos){
+					for(var i in cursos){
+						var cursoId = cursos[i].id
+						var cursoCadernos = []
+						for(var j in cadernos){
+							var caderno = cadernos[j]
+							if(caderno.get("curso") != undefined && caderno.get("curso").id == cursoId){
+								cursoCadernos.push(caderno)
+							}
+						}
+						self.$data.cadernos[cursoId] = cursoCadernos
+					}
+					self.$data.cursos = cursos
+				})
+			})
+		},
+		loadCadernos: function(callback){
+			Api.getAll(DisciplinaClass, "nome", function(cadernos){
+				callback(cadernos)
+			}, function(error){
+				console.log(error)
+			})
+		},
+		loadCursos: function(callback){
+			Api.getAll(CursoClass, "nome", function(cursos){
+				callback(cursos)
+			}, function(error){
+				console.log(error)
+			})
+		}
 	}   
 }
 </script>
