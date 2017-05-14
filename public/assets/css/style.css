@@ -145,3 +145,10 @@ a:hover, a:visited, a:link, a:active {
 #todos-cursos .collapsible .collapsible-header {
     font-size: 22px;
 }
+
+#todos-cursos .collapsible .collapsible-header .delete {
+    visibility: hidden !important;
+}
+#todos-cursos .collapsible .collapsible-header:hover .delete {
+    visibility: visible !important;
+}

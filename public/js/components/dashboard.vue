@@ -25,7 +25,7 @@
 						<h3>Meus cursos</h3>
 						<ul class="collapsible popout" data-collapsible="accordion">
 						    <li v-for="curso in cursos">
-						      <div class="collapsible-header"><i class="material-icons">collections_bookmark</i>{{curso.get("nome")}}</div>
+						      <div class="collapsible-header"><i class="material-icons">collections_bookmark</i>{{curso.get("nome")}} <i class="delete right material-icons">delete</i></div>
 						      <div class="collapsible-body grey lighten-5">
 								<div class="row">
 							      <div class="col l4" v-for="caderno in cadernos[curso.id]">
@@ -49,11 +49,42 @@
 			      <i class="large material-icons">add</i>
 			    </a>
 			    <ul>
-			      <li><a class="btn-floating green"><i class="material-icons">collections_bookmark</i></a></li>
-			      <li><a class="btn-floating blue"><i class="material-icons">library_books</i></a></li>
+			      <li><a id="btn-cadastrar-curso" class="btn-floating green"><i class="material-icons">collections_bookmark</i></a></li>
+			      <li><a id="btn-cadastrar-caderno" class="btn-floating blue"><i class="material-icons">library_books</i></a></li>
 			    </ul>
 		  </div>
-	</div>  
+
+		<div id="cadastrar-curso" class="modal modal-fixed-footer">
+		   <div class="modal-content">
+		      <h4>Novo Curso</h4>
+		      <div class="row">
+		         <form class="col s12">
+		            <div class="row">
+		               <div class="input-field col s12">
+		                  <input id="nomeCurso" type="text" class="validate">
+		                  <label for="nomeCurso">Nome do curso</label>
+		               </div>
+		            </div>
+		            <div class="row">
+		               <div class="input-field col s12">
+		                  <input id="nomeCoordenador" type="text" class="validate">
+		                  <label for="nomeCoordenador">Nome do coordenador</label>
+		               </div>
+		            </div>
+		            <div class="row">
+		               <div class="input-field col s12">
+		                  <textarea id="descricao" class="materialize-textarea validate"></textarea>
+		                  <label for="descricao">Descrição</label>
+		               </div>
+		            </div>
+		         </form>
+		      </div>
+		   </div>
+	      <div class="modal-footer">
+	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+	      </div>
+		</div>
 </template>
 	
 <script>
@@ -62,29 +93,57 @@ module.exports = {
 		return {
 			ultimosCadernos: [],
 			cadernos: [],
-			cursos: null
+			cursos: null,
+			instituicao: null
 		}
 	},
 	created () {
 		this.loadAll()
+	},
+	mounted() {
+		var self = this
+		$('#btn-cadastrar-curso').click(function(){
+			$('.modal').modal()
+			$('#cadastrar-curso').modal('open')
+		})
+		$('#btn-cadastrar-caderno').click(function(){
+			$('.modal').modal()
+			$('#cadastrar-caderno').modal('open')
+		})
+		$('#btn-salvar-curso').click(function(){
+			var nomeCurso = $("#nomeCurso").val()
+			var nomeCoordenador = $("#nomeCoordenador").val()
+			var descricao = $("#descricao").val()
+			
+			// TODO validar
+
+			self.saveCurso(nomeCurso, nomeCoordenador, descricao, function(curso){
+				$('#cadastrar-curso').modal('close')
+				Materialize.toast('<i class="material-icons">check</i> Curso criado com sucesso', 4000)
+				self.loadAll()
+			})
+		})
 	},
 	methods: {
 		loadAll: function(){
 			var self = this
 			this.loadCadernos(function(cadernos){
 				self.loadCursos(function(cursos){
-					for(var i in cursos){
-						var cursoId = cursos[i].id
-						var cursoCadernos = []
-						for(var j in cadernos){
-							var caderno = cadernos[j]
-							if(caderno.get("curso") != undefined && caderno.get("curso").id == cursoId){
-								cursoCadernos.push(caderno)
+					self.loadInstituicoes(function(instituicoes){
+						for(var i in cursos){
+							var cursoId = cursos[i].id
+							var cursoCadernos = []
+							for(var j in cadernos){
+								var caderno = cadernos[j]
+								if(caderno.get("curso") != undefined && caderno.get("curso").id == cursoId){
+									cursoCadernos.push(caderno)
+								}
 							}
+							self.$data.cadernos[cursoId] = cursoCadernos
 						}
-						self.$data.cadernos[cursoId] = cursoCadernos
-					}
-					self.$data.cursos = cursos
+						self.$data.cursos = cursos
+						self.$data.instituicoes = instituicoes
+					})
 				})
 			})
 		},
@@ -101,6 +160,30 @@ module.exports = {
 			}, function(error){
 				console.log(error)
 			})
+		},
+		loadInstituicoes: function(callback){
+			Api.getAll(InstituicaoClass, "nome", function(instituicoes){
+				callback(instituicoes)
+			}, function(error){
+				console.log(error)
+			})
+		},
+		saveCurso: function(nomeCurso, nomeCoordenador, descricao, callback){
+			var self = this
+			Api.create({
+			      "nome": nomeCurso,
+			      "nomeCoordenador": nomeCoordenador,
+			      "descricao": descricao,
+			      "instituicao": self.$data.instituicoes[0]
+			    }, 
+			    new CursoClass(),
+			    function(obj) {
+		    	  callback(obj)
+			    },
+			    function(error) {
+					Materialize.toast('<i class="material-icons">error</i> Erro ao salvar curso: ' + error.message, 4000)
+			    }
+			)
 		}
 	}   
 }
