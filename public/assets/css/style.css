@@ -45,6 +45,10 @@ body {
     margin: 0px;
 }
 
+html, body, #app, #caderno, #caderno > .row {
+    height: 100%;
+}
+
 .jumbotron {
   margin-top: 20px;
 }
@@ -121,11 +125,12 @@ body {
     min-width: 180px;
 }
 
-a:hover, a:visited, a:link, a:active {
+.nav-wrapper a:hover, .nav-wrapper a:visited, .nav-wrapper a:link, .nav-wrapper a:active {
     color: #FFFFFF !important;
+}
+a:hover, a:visited, a:link, a:active {
     text-decoration: none !important;
 }
-
 
 #dashboard #ultimos-cadernos .card-panel,
 #dashboard #todos-cursos .card-panel {
@@ -145,10 +150,70 @@ a:hover, a:visited, a:link, a:active {
 #todos-cursos .collapsible .collapsible-header {
     font-size: 22px;
 }
-
 #todos-cursos .collapsible .collapsible-header .delete {
     visibility: hidden !important;
 }
 #todos-cursos .collapsible .collapsible-header:hover .delete {
     visibility: visible !important;
+}
+
+#caderno > .row {
+    display: block !important;
+}
+#caderno > .row .col.s9 {
+    height: 100% !important;
+}
+#caderno #assuntos .collection-item:hover {
+    cursor: pointer !important;
+}
+#caderno #assunto-container {
+    display: table;
+    border-spacing: 0;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-top: 3px;
+    background: -webkit-linear-gradient(top,#f0f0f0 0%,white 5%) 0 0;
+    background-size: 100% 30px;
+}
+#caderno #assunto {
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    color: #717171;
+}
+#caderno #assunto:before {
+    content: '';
+    position: absolute;
+    width: 0px;
+    top: 0;
+    left: 39px;
+    bottom: 0;
+    border-left: 1px solid #F9D3D3;
+}
+#caderno #assunto #text {
+    border: none;
+    background-color: transparent;
+    padding: 30px 0 0 55px;
+    line-height: 30px;
+    border-radius: 2px;
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    background-image: none;
+    color: #555;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+[contentEditable=true]:empty:not(:focus)::before{
+    content:attr(data-ph)
 }

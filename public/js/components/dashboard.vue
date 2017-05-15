@@ -29,7 +29,7 @@
 						      <div class="collapsible-body grey lighten-5">
 								<div class="row">
 							      <div class="col l4" v-for="caderno in cadernos[curso.id]">
-					        		<a href="#">
+					        		<a v-bind:href="'#/caderno/'+caderno.id">
 							        	<div class="card-panel center-align light-blue darken-1">
 											<h4 class="truncate">{{caderno.get("nome")}}</h4>
 											<strong class="truncate">{{caderno.get("descricao")}}</strong>
@@ -127,7 +127,7 @@ module.exports = {
 	methods: {
 		loadAll: function(){
 			var self = this
-			this.loadCadernos(function(cadernos){
+			self.loadCadernos(function(cadernos){
 				self.loadCursos(function(cursos){
 					self.loadInstituicoes(function(instituicoes){
 						for(var i in cursos){

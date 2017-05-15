@@ -7,7 +7,7 @@ const router = new VueRouter({
   	  { path: '/sobre' },
   	  { path: '/instituicao/:id' },
   	  { path: '/curso/:id' },
-  	  { path: '/disciplina/:id' },
+  	  { path: '/caderno/:id' },
   	  { path: '/anotacao/:id' },
   	  { path: '*' }
     ] 
@@ -49,8 +49,8 @@ new Vue({
 			 this.currentView = 'instituicao'
   		} else if(path.startsWith('/curso/')){
 			 this.currentView = 'curso'
-  		} else if(path.startsWith('/disciplina/')){
-			 this.currentView = 'disciplina'
+  		} else if(path.startsWith('/caderno/')){
+			 this.currentView = 'caderno'
   		} else if(path.startsWith('/anotacao/')){
 			 this.currentView = 'anotacao'
   		} else {
@@ -66,7 +66,7 @@ new Vue({
     sobre: httpVueLoader('js/components/sobre.vue'),
     instituicao: httpVueLoader('js/components/instituicao.vue'),
     curso: httpVueLoader('js/components/curso.vue'),
-    disciplina: httpVueLoader('js/components/disciplina.vue'),
+    caderno: httpVueLoader('js/components/caderno.vue'),
     anotacao: httpVueLoader('js/components/anotacao.vue'),
     notFound: httpVueLoader('js/components/notFound.vue')
   }
@@ -127,21 +127,28 @@ new Vue({
 // )
 
 
-// Api.getById("XFexCMIfAz", CursoClass, 
-//   function(curso){
-//     Api.getById("FKwSvSKtNc", DisciplinaClass, 
-//       function(disciplina){
-//         var relation = curso.relation("disciplinas");
-//         relation.add(disciplina);
-//         Api.update(curso, function(obj) {
-//           console.log('Object updated: ' + obj);
-//         }, function(error) {
-//           console.log('Failed to create new object, with error code: ' + error.message);
-//         })
-//       },
-//       function(error) {
-//         console.log('Failed to create new object, with error code: ' + error.message);
-//       }
+// Api.getById("FKwSvSKtNc", DisciplinaClass, 
+//   function(disciplina){
+//     Api.create({
+//         "assunto": "Assunto X",
+//         "texto": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+//         "disciplina": disciplina
+//       }, 
+//       new AnotacaoClass()
+//     )
+//     Api.create({
+//         "assunto": "Assunto Y",
+//         "texto": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+//         "disciplina": disciplina
+//       }, 
+//       new AnotacaoClass()
+//     )
+//     Api.create({
+//         "assunto": "Assunto Z",
+//         "texto": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.",
+//         "disciplina": disciplina
+//       }, 
+//       new AnotacaoClass()
 //     )
 //   },
 //   function(error) {
