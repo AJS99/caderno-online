@@ -7,6 +7,10 @@
     width: 100%;
    }
 
+.collapsible-body h4, strong{
+    color: #fff;
+}
+
 #home-p {
     font-size: 1.60rem;
     color: #646964;
@@ -25,6 +29,10 @@
     width: 516px;
     margin: 0 auto;
     color: #646964;
+}
+
+#text-modal{
+    text-align: center;
 }
 
 #page-title{

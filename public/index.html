@@ -19,12 +19,12 @@
 
   <body> 
 	<div id="app">
-		<nav>
+		<nav class="light-blue lighten-1" role="navigation">
 		    <div class="nav-wrapper container">
 				<a href="#/" class="navbar-brand" to="/">
 					<span>CadernOnline</span>
 				</a>
-				<a class='right dropdown-button btn' href='#' data-activates='menu' v-if="Auth.isLoggedIn()">{{user.name}}</a>
+				<a class='right hide-on-med-and-down' href='#' data-activates='menu' v-if="Auth.isLoggedIn()">{{user.name}}</a>
 				<ul id='menu' class='dropdown-content' v-if="Auth.isLoggedIn()">
 					<li v-for="item in menu">
 						<a v-bind:href="item.url"><i class="material-icons">{{item.icon}}</i>{{item.name}}</a>

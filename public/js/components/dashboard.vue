@@ -85,6 +85,8 @@
 	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
 	      </div>
 		</div>
+		</div>
+		</div>
 </template>
 	
 <script>
