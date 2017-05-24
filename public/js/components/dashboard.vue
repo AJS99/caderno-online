@@ -54,6 +54,8 @@
 			    </ul>
 		  </div>
 
+		  <!-- MODAL CADASTRO DE CURSO -->
+
 		<div id="cadastrar-curso" class="modal modal-fixed-footer">
 		   <div class="modal-content">
 		      <h4>Novo Curso</h4>
@@ -85,6 +87,55 @@
 	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
 	      </div>
 		</div>
+
+		<!-- MODAL CADASTRO DE CADERNO -->
+
+		<div id="cadastrar-caderno" class="modal modal-fixed-footer">
+		   <div class="modal-content">
+		      <h4>Nova Disciplina</h4>
+		      <div class="row">
+		         <form class="col s12">
+		            <div class="row">
+		               <div class="input-field col s6">
+		                  <input id="nomeDisciplina" type="text" class="validate">
+		                  <label for="nomeDisciplina">Nome da disciplina</label>
+		               </div>
+		               <div class="input-field col s6">
+							<!-- <select>
+								<option value="" disabled selected>Selecione o curso</option>
+								<ul>
+									<li v-for="curso in cursos">{{curso.get("nome")}}</li>
+								</ul> 
+							</select>
+							<label>A qual curso pertence essa disciplina?</label> -->
+							<select v-model="selected">
+							  <option v-for="option in options" v-bind:value="option.value">
+							    {{ option.text }}
+							  </option>
+							</select>
+							<span>Selected: {{ selected }}</span>
+						</div>
+		            </div>
+		            <div class="row">
+		               <div class="input-field col s12">
+		                  <input id="nomeProfessor" type="text" class="validate">
+		                  <label for="nomeProfessor">Nome do professor</label>
+		               </div>
+		            </div>
+		            <div class="row">
+		               <div class="input-field col s12">
+		                  <textarea id="descricaoDisciplina" class="materialize-textarea validate"></textarea>
+		                  <label for="descricao">Descrição</label>
+		               </div>
+		            </div>
+		         </form>
+		      </div>
+		   </div>
+	      <div class="modal-footer">
+	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+	         <a id="btn-salvar-caderno" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+	      </div>
+		</div>
 		</div>
 		</div>
 </template>
@@ -96,7 +147,14 @@ module.exports = {
 			ultimosCadernos: [],
 			cadernos: [],
 			cursos: null,
-			instituicao: null
+			instituicao: null,
+			
+			selected: 'A',
+			options: [
+				{ text: 'One', value: 'A' },
+				{ text: 'Two', value: 'B' },
+				{ text: 'Three', value: 'C' }
+			]
 		}
 	},
 	created () {
@@ -104,14 +162,14 @@ module.exports = {
 	},
 	mounted() {
 		var self = this
+
+		// CREATE NEW CURSO
+
 		$('#btn-cadastrar-curso').click(function(){
 			$('.modal').modal()
 			$('#cadastrar-curso').modal('open')
 		})
-		$('#btn-cadastrar-caderno').click(function(){
-			$('.modal').modal()
-			$('#cadastrar-caderno').modal('open')
-		})
+		
 		$('#btn-salvar-curso').click(function(){
 			var nomeCurso = $("#nomeCurso").val()
 			var nomeCoordenador = $("#nomeCoordenador").val()
@@ -125,6 +183,28 @@ module.exports = {
 				self.loadAll()
 			})
 		})
+
+		//CREATE WEW DISCIPLINA (CADERNO)
+
+		$('#btn-cadastrar-caderno').click(function(){
+			$('.modal').modal()
+			$('#cadastrar-caderno').modal('open')
+		})
+
+		$('#btn-salvar-caderno').click(function(){
+			var nomeDisciplina = $("#nomeDisciplina").val()
+			var nomeProfessor = $("#nomeProfessor").val()
+			var descricaoDisciplina = $("#descricaoDisciplina").val()
+			
+			// TODO validar
+
+			self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, function(caderno){
+				$('#cadastrar-caderno').modal('close')
+				Materialize.toast('<i class="material-icons">check</i> Disciplina criado com sucesso! Novo caderno disponivel!', 4000)
+				self.loadAll()
+			})
+		})
+
 	},
 	methods: {
 		loadAll: function(){
@@ -184,6 +264,24 @@ module.exports = {
 			    },
 			    function(error) {
 					Materialize.toast('<i class="material-icons">error</i> Erro ao salvar curso: ' + error.message, 4000)
+			    }
+			)
+		},
+
+		saveCaderno: function(nomeDisciplina, nomeProfessor, descricaoDisciplina, callback){
+			var self = this
+			Api.create({
+			      "nome": nomeDisciplina,
+			      "nomeProfessor": nomeProfessor,
+			      "descricao": descricaoDisciplina
+			      // "instituicao": self.$data.instituicoes[0]
+			    }, 
+			    new DisciplinaClass(),
+			    function(obj) {
+		    	  callback(obj)
+			    },
+			    function(error) {
+					Materialize.toast('<i class="material-icons">error</i> Erro ao salvar disciplina: ' + error.message, 4000)
 			    }
 			)
 		}

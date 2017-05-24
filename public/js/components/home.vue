@@ -1,11 +1,18 @@
 <template>
-	<header id="home-fundo">
-		<div class="home-wrap"> 
-			<h1 class="logo"><img src="assets/images/home-logo.png"> CadernOnline</h1>
-			<p id="home-p"> Seja bem vindo ao CadernOnline. <br>Aqui sua vida acadêmica será bem mais fácil de gerenciar e controlar.</p>
+	<header>
+		<div class="section no-pad-bot" id="index-banner">
+			<div class="container">
+			<br><br>
+				<div class="section">
+					<div class="home-wrap"> 
+						<h1 class="logo"><img src="assets/images/home-logo.png"> CadernOnline</h1>
+						<p id="home-p" class="header col s12 light"> Seja bem vindo ao CadernOnline. <br>Aqui sua vida acadêmica será bem mais fácil de gerenciar e controlar.</p>
 
-			<!-- Using value --> 
-			<b-btn id="btn-login" class="btn-large waves-effect waves-light blue">Entrar</b-btn>
+						<!-- Using value --> 
+						<b-btn id="btn-login" class="btn-large waves-effect waves-light blue">Entrar</b-btn>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div id="modalEntrar" class="modal modal-fixed-footer">

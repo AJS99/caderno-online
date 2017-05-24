@@ -1,9 +1,8 @@
-#home-fundo{
+#index-banner{
     background-image: url(../images/home-page/Background-home-page-1.jpg);
     background-size: cover;
     background-position: center;
     position: absolute;
-    height: 100%;
     width: 100%;
    }
 
@@ -21,7 +20,8 @@
     max-width: 590px;
     margin: 0 auto;
     padding: 0 20px;
-    margin-top: 140px;
+    margin-top: 80px;
+    margin-bottom: 90px;
     text-align: center;
 }
 
