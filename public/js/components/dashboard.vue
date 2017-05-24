@@ -108,12 +108,11 @@
 								</ul> 
 							</select>
 							<label>A qual curso pertence essa disciplina?</label> -->
-							<select v-model="selected">
-							  <option v-for="option in options" v-bind:value="option.value">
-							    {{ option.text }}
+							<select>
+							  <option v-for="curso in cursos" v-bind:value="curso.id">
+							    {{ curso.get("nome") }}
 							  </option>
 							</select>
-							<span>Selected: {{ selected }}</span>
 						</div>
 		            </div>
 		            <div class="row">
@@ -147,14 +146,7 @@ module.exports = {
 			ultimosCadernos: [],
 			cadernos: [],
 			cursos: null,
-			instituicao: null,
-			
-			selected: 'A',
-			options: [
-				{ text: 'One', value: 'A' },
-				{ text: 'Two', value: 'B' },
-				{ text: 'Three', value: 'C' }
-			]
+			instituicao: null
 		}
 	},
 	created () {
