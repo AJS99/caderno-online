@@ -87,7 +87,7 @@
 			   </div>
 		      <div class="modal-footer">
 		         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-		         <a id="btn-salvar-imagem-webcam" class="modal-action waves-effect waves-green btn-flat" v-on:click="">Salvar</a>
+		         <a id="btn-salvar-imagem-webcam" class="modal-action waves-effect waves-green btn-flat" v-on:click="onSaveFotoClicked()">Salvar</a>
 		      </div>
 			</div>
 	    </div>
@@ -116,7 +116,6 @@ module.exports = {
 
 		// FUNÇÕES DO CADERNO - INICIO
 		$('#btn-foto').click(function(){
-			console.log("test")
 			Webcam.set({
 				width: 320,
 				height: 320,
@@ -220,9 +219,9 @@ module.exports = {
 			$('#assuntos li').eq(assuntoPosition + 1).addClass("active")
 			this.loadAssuntoText(assunto)
 		},
-		onSaveFotoClicked: function(assuntoId){
-			Webcam.snap(function(dataUri) {
-				alert(dataUri)
+		onSaveFotoClicked: function(){
+			console.log("onSaveFotoClicked")
+ 			Webcam.snap(function(dataUri) {
 				console.log(dataUri)
 			});
 		},
