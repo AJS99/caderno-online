@@ -226,6 +226,17 @@ a:hover, a:visited, a:link, a:active {
     content:attr(data-ph)
 }
 
+#modalEntrar .tabs {
+    margin-bottom: 10px;
+    background-color: transparent !important;
+}
+#modalEntrar #form-login .btn i {
+    font-style: normal;
+}
+#modalEntrar #btn-user-cadastro {
+    display: none;
+}
+
 /*#app {
   text-align: center;
 }

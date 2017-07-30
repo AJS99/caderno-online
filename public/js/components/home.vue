@@ -26,14 +26,12 @@
 								<li id="tab-cadastro" class="tab col s6"><a href="#form-cadastro">Cadastrar</a></li>
 							</ul>
 						</div>
-					</div>
-					<div class="row">
 						<div id="form-login" class="col s12">
 							<form class="col s12">
 								<div class="row">
-									<button id="btn-facebook" class="btn-large waves-effect waves-light blue btn btn-secondary col s12">
-										<a v-on:click="facebookLogin">Entrar com Facebook</a>
-									</button><br>
+									<a v-on:click="facebookLogin" id="btn-facebook" class="btn-large waves-effect waves-light btn blue col s12">
+										<i>Entrar com Facebook</i>
+									</a><br>
 								</div>
 								
 								<div class="divider"></div>
@@ -94,13 +92,27 @@ module.exports = {
         }
     },
 	created () {
-		console.log("HOME123");
+
 	},
 	mounted() {
 		var self = this
+		$('#modalEntrar').tabs({
+			onShow: function(tab) {
+				var currentTabId = tab[0].id
+				if(currentTabId === "form-login"){
+					$("#btn-user-entrar").show()
+					$("#btn-user-cadastro").hide()
+				} else if(currentTabId === "form-cadastro"){
+					$("#btn-user-entrar").hide()
+					$("#btn-user-cadastro").show()
+				}
+			}
+		});
+
 		$('#btn-login').click(function(){
-			$('.modal').modal()
+			$('#modalEntrar').modal()
 			$('#modalEntrar').modal('open')
+			$('#modalEntrar .tabs').tabs()
 		})
 
 		$('#btn-user-entrar').click(function(){
