@@ -53,35 +53,43 @@
 						<a id="btn-video" class="btn-floating green">
 							<i class="material-icons">videocam</i>
 						</a>
-						<input type="file" id="take-picture" accept="image/*" style="display: none;">
 					</li>
 					<li>
-						<a id="btn-foto" class="btn-floating blue">
+						<a id="btn-foto" href="#modal-webcam" class="btn-floating blue modal-trigger">
 							<i class="material-icons">camera_alt</i>
 						</a>
-						<video id="video" width="640" height="480" autoplay style="display: none;"></video>
 					</li>
 				</ul>
 			</div>
 	      </div>
 
-	       <!-- MODAL CADASTRO DE ANOTAÇÃO -->
+	       	<!-- MODAL CADASTRO DE ANOTAÇÃO -->
+			<div id="cadastrar-anotacao" class="modal modal-fixed-footer">
+			   <div class="modal-content">
+			      <h4>Novo Assunto</h4>
+			         <form class="col s12">
+		               <div class="input-field col s12">
+			                  <input id="nomeAssunto" type="text" class="validate">
+			                  <label for="nomeAssunto">Nome</label>
+			            </div>
+			         </form>
+			   </div>
+		      <div class="modal-footer">
+		         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+		         <a id="btn-salvar-anotacao" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+		      </div>
+			</div>
 
-		<div id="cadastrar-anotacao" class="modal modal-fixed-footer">
-		   <div class="modal-content">
-		      <h4>Novo Assunto</h4>
-		         <form class="col s12">
-	               <div class="input-field col s12">
-		                  <input id="nomeAssunto" type="text" class="validate">
-		                  <label for="nomeAssunto">Nome</label>
-		            </div>
-		         </form>
-		   </div>
-	      <div class="modal-footer">
-	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-	         <a id="btn-salvar-anotacao" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
-	      </div>
-		</div>
+			<div id="modal-webcam" class="modal modal-fixed-footer">
+			   <div class="modal-content">
+			      	<h4>Capturar imagem</h4>
+		         	<div id="webcam"></div>
+			   </div>
+		      <div class="modal-footer">
+		         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+		         <a id="btn-salvar-imagem-webcam" class="modal-action waves-effect waves-green btn-flat" v-on:click="">Salvar</a>
+		      </div>
+			</div>
 	    </div>
 	</div>  
 </template>
@@ -104,32 +112,20 @@ module.exports = {
 	mounted() {
 		var self = this
 
+		$('.modal').modal();
+
 		// FUNÇÕES DO CADERNO - INICIO
 		$('#btn-foto').click(function(){
-			$('#text').attr('contenteditable','true')
-
-			$("#video").click()
-			var video = document.getElementById('video');
-			
-			// Get access to the camera!
-			if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-			    // Not adding `{ audio: true }` since we only want video now
-			    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-			        video.src = window.URL.createObjectURL(stream);
-			        video.play();
-			    });
-			}
-
-			// Elements for taking the snapshot
-			$("#canvas").click()
-			var canvas = document.getElementById('canvas');
-			var context = canvas.getContext('2d');
-			var video = document.getElementById('video');
-
-			// Trigger photo take
-			document.getElementById("snap").addEventListener("click", function() {
-				context.drawImage(video, 0, 0, 640, 480);
+			console.log("test")
+			Webcam.set({
+				width: 320,
+				height: 320,
+				dest_width: 640,
+				dest_height: 640,
+				image_format: 'jpeg',
+				jpeg_quality: 95
 			});
+			Webcam.attach('#webcam');
 		})
 		$('#btn-video').click(function(){
 			$('#text').attr('contenteditable','true')
@@ -223,6 +219,12 @@ module.exports = {
 			})
 			$('#assuntos li').eq(assuntoPosition + 1).addClass("active")
 			this.loadAssuntoText(assunto)
+		},
+		onSaveFotoClicked: function(assuntoId){
+			Webcam.snap(function(dataUri) {
+				alert(dataUri)
+				console.log(dataUri)
+			});
 		},
 		getAssuntoPosition: function(assuntoId){
 			var assuntos = this.$data.assuntos
