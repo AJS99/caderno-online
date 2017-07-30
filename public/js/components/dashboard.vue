@@ -25,7 +25,7 @@
 						<h3>Meus cursos</h3>
 						<ul class="collapsible popout" data-collapsible="accordion">
 						    <li v-for="curso in cursos">
-						      <div class="collapsible-header"><i class="material-icons">collections_bookmark</i>{{curso.get("nome")}} <i class="delete right material-icons">delete</i></div>
+						      <div class="collapsible-header"><i class="material-icons">collections_bookmark</i>{{curso.get("nome")}} <i class="delete right material-icons" v-on:click="deleteCurso(curso)">delete</i></div>
 						      <div class="collapsible-body grey lighten-5">
 								<div class="row">
 							      <div class="col l4" v-for="caderno in cadernos[curso.id]">
@@ -100,13 +100,11 @@
 		                  <input id="nomeDisciplina" type="text" class="validate">
 		                  <label for="nomeDisciplina">Nome da disciplina</label>
 		               </div>
-
-		               <!-- TODO - LISTAR CURSOS -->
 		               <div class="input-field col s6">
-<!-- 							<select>
-								<option v-for="curso in cursos" v-bind:value="curso.id">{{ curso.nome }}</option>
+ 							<select id="select-cursos">
+								<option v-for="curso in cursos" v-bind:value="curso.id">{{ curso.get("nome") }}</option>
 							</select>
-							<label>A qual curso pertence essa disciplina?</label> -->
+							<label>A qual curso pertence essa disciplina?</label>
 						</div>
 		            </div>
 		            <div class="row">
@@ -148,11 +146,9 @@ module.exports = {
 	},
 	mounted() {
 		var self = this
-
-		// CREATE NEW CURSO
-
+		
 		$('#btn-cadastrar-curso').click(function(){
-			$('.modal').modal()
+			$('#cadastrar-curso').modal()
 			$('#cadastrar-curso').modal('open')
 		})
 		
@@ -165,6 +161,10 @@ module.exports = {
 
 			self.saveCurso(nomeCurso, nomeCoordenador, descricao, function(curso){
 				$('#cadastrar-curso').modal('close')
+				$("#nomeCurso").val("")
+				$("#nomeCoordenador").val("")
+				$("#descricao").val("")
+
 				Materialize.toast('<i class="material-icons">check</i> Curso criado com sucesso', 4000)
 				self.loadAll()
 			})
@@ -173,24 +173,31 @@ module.exports = {
 		//CREATE WEW DISCIPLINA (CADERNO)
 
 		$('#btn-cadastrar-caderno').click(function(){
-			$('.modal').modal()
+			$('#cadastrar-caderno').modal()
 			$('#cadastrar-caderno').modal('open')
+			$('#select-cursos').material_select()
 		})
 
 		$('#btn-salvar-caderno').click(function(){
 			var nomeDisciplina = $("#nomeDisciplina").val()
 			var nomeProfessor = $("#nomeProfessor").val()
 			var descricaoDisciplina = $("#descricaoDisciplina").val()
+			var cursoId = $("#select-cursos").val()
+			var curso = self.getCursoById(cursoId)
 			
 			// TODO validar
 
-			self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, function(caderno){
+			self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, curso, function(caderno){
 				$('#cadastrar-caderno').modal('close')
+				$("#nomeDisciplina").val("")
+				$("#nomeProfessor").val("")
+				$("#descricaoDisciplina").val("")
+				$("#select-cursos").val("")
+
 				Materialize.toast('<i class="material-icons">check</i> Disciplina criado com sucesso! Novo caderno disponivel!', 4000)
 				self.loadAll()
 			})
 		})
-
 	},
 	methods: {
 		loadAll: function(){
@@ -211,7 +218,7 @@ module.exports = {
 						}
 						self.$data.cursos = cursos
 						self.$data.instituicoes = instituicoes
-
+						$('.collapsible').collapsible()
 					})
 				})
 			})
@@ -254,14 +261,13 @@ module.exports = {
 			    }
 			)
 		},
-
-		saveCaderno: function(nomeDisciplina, nomeProfessor, descricaoDisciplina, callback){
+		saveCaderno: function(nomeDisciplina, nomeProfessor, descricaoDisciplina, curso, callback){
 			var self = this
 			Api.create({
 			      "nome": nomeDisciplina,
 			      "nomeProfessor": nomeProfessor,
-			      "descricao": descricaoDisciplina
-			      // "instituicao": self.$data.instituicoes[0]
+			      "descricao": descricaoDisciplina,
+			      "curso": curso
 			    }, 
 			    new DisciplinaClass(),
 			    function(obj) {
@@ -271,6 +277,28 @@ module.exports = {
 					Materialize.toast('<i class="material-icons">error</i> Erro ao salvar disciplina: ' + error.message, 4000)
 			    }
 			)
+		},
+		deleteCurso: function(curso){
+			var self = this
+			Api.delete(curso, 
+			    function(obj) {
+			    	console.log(obj)
+		    	  	Materialize.toast('<i class="material-icons">check</i> Curso excluido', 4000)
+		    	  	self.loadAll()
+			    },
+			    function(error) {
+					Materialize.toast('<i class="material-icons">error</i> Erro ao excluir curso: ' + error.message, 4000)
+			    }
+			)
+		},
+		getCursoById: function(id){
+			for(var i in this.$data.cursos){
+				var curso = this.$data.cursos[i]
+				if(curso.id == id){
+					return curso
+				}
+			}
+			return null
 		}
 	}   
 }

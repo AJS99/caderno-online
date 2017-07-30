@@ -112,7 +112,7 @@ var Api = {
 		});
 	},
 	delete: function(obj, successCallback, errorCallback){
-		obj.destroy(null, {
+		obj.destroy({
 		  success: function(obj) {
 		    successCallback(obj)
 		  },

@@ -157,14 +157,17 @@ a:hover, a:visited, a:link, a:active {
 
 #todos-cursos .collapsible .collapsible-header {
     font-size: 22px;
+    position: relative;
 }
-#todos-cursos .collapsible .collapsible-header .delete {
+#todos-cursos .collapsible .delete {
     visibility: hidden !important;
+    position: absolute;
+    right: 0;
+    top: 20px;
 }
-#todos-cursos .collapsible .collapsible-header:hover .delete {
+#todos-cursos .collapsible:hover .delete {
     visibility: visible !important;
 }
-
 #caderno > .row {
     display: block !important;
 }
