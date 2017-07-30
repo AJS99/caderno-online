@@ -57,6 +57,10 @@
 		$(document).ready(function() {
 			$('select').material_select();
 			$("#app .progress").hide()
+			navigator.getUserMedia = (navigator.getUserMedia ||
+                            navigator.webkitGetUserMedia ||
+                            navigator.mozGetUserMedia || 
+                            navigator.msGetUserMedia);
 		});
 	</script>
 
