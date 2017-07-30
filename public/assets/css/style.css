@@ -15,6 +15,11 @@
     color: #646964;
 }
 
+#app .progress {
+    position: absolute;
+    margin: 0;
+}
+
 .home-wrap {
     display: block;
     max-width: 590px;
@@ -33,6 +38,11 @@
 
 #text-modal{
     text-align: center;
+}
+
+.image-body {
+    width: 513px;
+    height: auto;
 }
 
 #page-title{
@@ -134,7 +144,7 @@ html, body, #app, #caderno, #caderno > .row {
 }
 
 .nav-wrapper a:hover, .nav-wrapper a:visited, .nav-wrapper a:link, .nav-wrapper a:active {
-    color: #FFFFFF !important;
+    color: #FFFFFF;
 }
 a:hover, a:visited, a:link, a:active {
     text-decoration: none !important;
@@ -226,7 +236,9 @@ a:hover, a:visited, a:link, a:active {
 }
 
 [contentEditable=true]:empty:not(:focus)::before{
-    content:attr(data-ph)
+    content:attr(data-ph);
+    font-style: italic;
+    color: gray;
 }
 
 #modalEntrar .tabs {
@@ -239,6 +251,14 @@ a:hover, a:visited, a:link, a:active {
 #modalEntrar #btn-user-cadastro {
     display: none;
 }
+
+.nav-wrapper ul li img {
+    width: 35px;
+    float: left;
+    margin-top: 14px;
+    margin-right: 10px;
+}
+
 
 /*#app {
   text-align: center;

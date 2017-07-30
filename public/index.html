@@ -13,21 +13,32 @@
 
   <body> 
 	<div id="app">
+		<div class="progress light-blue lighten-1">
+	      <div class="indeterminate light-blue darken-3"></div>
+	  	</div>
+		<ul id='menu' class='dropdown-content' v-if="Auth.isLoggedIn()">
+			<li v-for="item in menu">
+				<a v-bind:href="item.url" class="blue-text"><i class="material-icons">{{item.icon}}</i>{{item.name}}</a>
+			</li>
+		</ul>
 		<nav class="light-blue lighten-1" role="navigation">
 		    <div class="nav-wrapper container">
 				<a href="#/" class="brand-logo" to="/">
 					<span>CadernOnline</span>
 				</a>
-				<a class='right hide-on-med-and-down' href='#' data-activates='menu' v-if="Auth.isLoggedIn()">{{user.name}}</a>
-				<ul id='menu' class='dropdown-content' v-if="Auth.isLoggedIn()">
-					<li v-for="item in menu">
-						<a v-bind:href="item.url"><i class="material-icons">{{item.icon}}</i>{{item.name}}</a>
+				<ul class="right">
+			      	<li>
+						<a id="save" class="waves-effect waves-blue btn-flat white-text" v-if="$route.path.indexOf('/caderno') == 0"><i class="material-icons left">save</i> Salvar</a>
 					</li>
-				</ul>
+			      	<li>
+			      		<a class='dropdown-button' href='#!' data-activates='menu' v-if="Auth.isLoggedIn()"> <img :src="user.get('profileImageUrl')" alt="" class="circle responsive-img"> {{user.get("name")}} <i class="material-icons right">arrow_drop_down</i></a>
+					</li>
+			    </ul>
+				
 		    </div>
 	  	</nav>
 	  
-	  		<component v-bind:is="currentView"></component>	
+  		<component v-bind:is="currentView"></component>	
 		
 	</div>
 
@@ -46,6 +57,7 @@
 	<script>
 		$(document).ready(function() {
 			$('select').material_select();
+			$("#app .progress").hide()
 		});
 	</script>
 

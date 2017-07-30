@@ -6,7 +6,9 @@
 				<li class="collection-header" v-if="caderno">
 					<h4>{{caderno.get("nome")}}</h4>
 				</li>
-				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="assunto in assuntos">{{assunto.get("assunto")}}</li>
+				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="(assunto, i) in assuntos" v-bind:class="{ active: i == 0 }">
+				<span v-if="i == 0">{{onAssuntoClicked(assunto.id)}}</span>
+				{{assunto.get("assunto")}}</li>
 			</ul>
 			<a id="btn-cadastrar-anotacao" class="btn-floating btn-large waves-effect waves-light red">
 				<i class="material-icons">add</i>
@@ -28,24 +30,23 @@
 	      <div class="col s9">
 	      	<div id="assunto-container">
 		      	<div id="assunto">
-		      		<div id="text" contentEditable="false" data-ph="Texto..."></div>
-		      		<img src="" height="200" style=" position: relative; height: 350px; padding-left: 250px;"><br><br>
-		      		<div id="text" contentEditable="true"></div>
+		      		<div id="text" contentEditable="true" data-ph="Texto..."></div>
+		      		<!--<img src="" height="200" style=" position: relative; height: 350px; padding-left: 250px;"><br><br>-->
 
-		      		<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+		      		<!--<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>-->
 		      	</div>
 	      	</div>
-			<div id="edicao" class="fixed-action-btn horizontal click-to-toggle">
+			<div id="edicao" class="fixed-action-btn horizontal">
 				<a class="btn-floating btn-large red">
 					<i class="material-icons">mode_edit</i>
 				</a>
 				<ul>
 					<li>
-						<a  id="btn-anexo" type="file" onchange="previewFile()" class="btn-floating red">
+						<a  id="btn-anexo" type="file" class="btn-floating red">
 							<i class="material-icons">attach_file</i>
 						</a>
 								<!-- <input type="file" @change="onFileChange" accept="text/plain,text/rtf,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/image/*,video/*" style="display: none;"> -->
-								<input id="input-file" type="file" onchange="previewFile()" style="display: none;">					
+								<input id="input-file" type="file" accept="image/png, image/jpeg" v-on:change="previewFile()" style="display: none;">					
 					</li>
 					<li><a id="btn-audio" class="btn-floating yellow darken-1"><i class="material-icons">mic</i></a></li>
 					<li>
@@ -92,10 +93,12 @@ module.exports = {
 		return {
 			caderno: null,
 			assuntos: null,
+			currentAssunto: null,
 			image: ''
 		}
 	},
 	created () {
+		$("#app .progress").show()
 		this.loadAll()
 	},
 	mounted() {
@@ -104,12 +107,10 @@ module.exports = {
 		// FUNÇÕES DO CADERNO - INICIO
 		$('#btn-foto').click(function(){
 			$('#text').attr('contenteditable','true')
-			console.log("acessou")
 
 			$("#video").click()
 			var video = document.getElementById('video');
 			
-			console.log("clicou")
 			// Get access to the camera!
 			if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 			    // Not adding `{ audio: true }` since we only want video now
@@ -129,9 +130,6 @@ module.exports = {
 			document.getElementById("snap").addEventListener("click", function() {
 				context.drawImage(video, 0, 0, 640, 480);
 			});
-
-
-			console.log("função de tirar foto")	
 		})
 		$('#btn-video').click(function(){
 			$('#text').attr('contenteditable','true')
@@ -163,12 +161,17 @@ module.exports = {
 			
 			// TODO validar
 
-			self.saveAnotacao(nomeAssunto, function(curso){
+			self.saveAnotacao(nomeAssunto, self.$data.caderno, function(curso){
 				$('#cadastrar-anotacao').modal('close')
+				$("#nomeAssunto").val("")
 
 				Materialize.toast('<i class="material-icons">check</i> Assunto criado com sucesso', 4000)
 				self.loadAll()
 			})
+		})
+
+		$('.nav-wrapper #save').click(function(){
+			self.updateCurrentAnotacao()
 		})
 	},
 	methods: {
@@ -178,6 +181,7 @@ module.exports = {
 				self.loadAssuntos(caderno, function(assuntos){
 					self.$data.assuntos = assuntos
 					self.$data.caderno = caderno
+					$("#app .progress").hide()
 				})
 			})
 		},
@@ -204,18 +208,21 @@ module.exports = {
 			});
 		},
 		loadAssuntoText: function(assunto){
-			console.log(assunto.get("assunto"))
 			if(assunto){
-				$('#text').html(assunto.get("texto"))
+				var texto = assunto.get("texto")
+				$('#text').html(texto === undefined ? "" : texto)
 			}
 		},
 		onAssuntoClicked: function(assuntoId){
 			var assuntoPosition = this.getAssuntoPosition(assuntoId)
+			var assunto = this.$data.assuntos[assuntoPosition]
+			this.$data.currentAssunto = assunto
+
 			$('#assuntos li').each(function(){
 				$(this).removeClass("active")
 			})
 			$('#assuntos li').eq(assuntoPosition + 1).addClass("active")
-			this.loadAssuntoText(this.$data.assuntos[assuntoPosition])
+			this.loadAssuntoText(assunto)
 		},
 		getAssuntoPosition: function(assuntoId){
 			var assuntos = this.$data.assuntos
@@ -230,14 +237,28 @@ module.exports = {
 				return -1
 			}
 		},
-		saveAnotacao: function(nomeAssunto, callback){
+		saveAnotacao: function(nomeAssunto, disciplina, callback){
 			var self = this
 			Api.create({
 			      "assunto": nomeAssunto,
+			      "disciplina": disciplina,
+			      "texto": ""
 			    }, 
 			    new AnotacaoClass(),
 			    function(obj) {
 		    	  callback(obj)
+			    },
+			    function(error) {
+					Materialize.toast('<i class="material-icons">error</i> Erro ao salvar assunto: ' + error.message, 4000)
+			    }
+			)
+		},
+		updateCurrentAnotacao: function(){
+			var texto = $('#text').html()
+			this.$data.currentAssunto.set("texto", texto)
+			Api.update(this.$data.currentAssunto,
+			    function(obj) {
+		    	  Materialize.toast('<i class="material-icons">check</i> Assunto salvo', 4000)
 			    },
 			    function(error) {
 					Materialize.toast('<i class="material-icons">error</i> Erro ao salvar assunto: ' + error.message, 4000)
@@ -266,17 +287,20 @@ module.exports = {
 		},
 
 		previewFile() {
-		  var preview = document.querySelector('img');
-		  var file    = document.querySelector('input[type=file]').files[0];
-		  var reader  = new FileReader();
+			$("#app .progress").show()
+		  	var fileUploadControl = $("#input-file")[0]
+		  	if (fileUploadControl.files.length > 0) {
+			  	var file = fileUploadControl.files[0]
+			  	var name = file.name
+			  	var parseFile = new Parse.File(name, file)
+			  	parseFile.save().then(function() {
+				  $("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
+				  $("#app .progress").hide()
+				}, function(error) {
+				  console.log(error)
+				});
 
-		  reader.addEventListener("load", function () {
-		    preview.src = reader.result;
-		  }, false);
-
-		  if (file) {
-		    reader.readAsDataURL(file);
-		  }
+			}
 		}
 
 	}   
