@@ -220,9 +220,9 @@ module.exports = {
 			this.loadAssuntoText(assunto)
 		},
 		onSaveFotoClicked: function(){
-			$("#app .progress").show()
 	       	Webcam.snap(function(data) {
-	        	var parseFile = new Parse.File("foto.jpg", data)
+				$("#app .progress").show()
+	        	var parseFile = new Parse.File("foto.jpg", {base64: data})
           		parseFile.save().then(function() {
 		          	$("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
 		          	$("#app .progress").hide()
@@ -230,6 +230,7 @@ module.exports = {
 		          	Webcam.reset()
 	        	}, function(error) {
 	          		console.log(error)
+		          	$("#app .progress").hide()
 	        	});
 	      	});
 		},
@@ -296,9 +297,9 @@ module.exports = {
 		},
 
 		previewFile() {
-			$("#app .progress").show()
 		  	var fileUploadControl = $("#input-file")[0]
 		  	if (fileUploadControl.files.length > 0) {
+				$("#app .progress").show()
 			  	var file = fileUploadControl.files[0]
 			  	var name = file.name
 			  	var parseFile = new Parse.File(name, file)
@@ -306,6 +307,7 @@ module.exports = {
 				  $("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
 				  $("#app .progress").hide()
 				}, function(error) {
+				  $("#app .progress").hide()
 				  console.log(error)
 				});
 
