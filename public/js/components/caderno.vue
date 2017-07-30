@@ -220,10 +220,18 @@ module.exports = {
 			this.loadAssuntoText(assunto)
 		},
 		onSaveFotoClicked: function(){
-			console.log("onSaveFotoClicked")
- 			Webcam.snap(function(dataUri) {
-				console.log(dataUri)
-			});
+			$("#app .progress").show()
+	       	Webcam.snap(function(data) {
+	        	var parseFile = new Parse.File("foto.jpg", data)
+          		parseFile.save().then(function() {
+		          	$("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
+		          	$("#app .progress").hide()
+		          	$('#modal-webcam').modal('close')
+		          	Webcam.reset()
+	        	}, function(error) {
+	          		console.log(error)
+	        	});
+	      	});
 		},
 		getAssuntoPosition: function(assuntoId){
 			var assuntos = this.$data.assuntos
