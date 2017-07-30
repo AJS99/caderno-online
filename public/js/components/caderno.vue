@@ -112,6 +112,18 @@ module.exports = {
 	mounted() {
 		var self = this
 
+		navigator.getUserMedia(
+		    {
+		      video: true
+		    },
+		    function(localMediaStream) {
+	    		console.log(localMediaStream)
+		    },
+		    function(err) {
+		      console.log(err);
+		    }
+	  	)
+
 		$('.modal').modal();
 
 		// FUNÇÕES DO CADERNO - INICIO
