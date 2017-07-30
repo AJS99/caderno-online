@@ -89,10 +89,10 @@
 		</div>
 
 		<!-- MODAL CADASTRO DE CADERNO -->
-
+		
 		<div id="cadastrar-caderno" class="modal modal-fixed-footer">
 		   <div class="modal-content">
-		      <h4>Nova Disciplina</h4>
+		     <h4>Nova Disciplina</h4>
 		      <div class="row">
 		         <form class="col s12">
 		            <div class="row">
@@ -100,19 +100,13 @@
 		                  <input id="nomeDisciplina" type="text" class="validate">
 		                  <label for="nomeDisciplina">Nome da disciplina</label>
 		               </div>
+
+		               <!-- TODO - LISTAR CURSOS -->
 		               <div class="input-field col s6">
-							<!-- <select>
-								<option value="" disabled selected>Selecione o curso</option>
-								<ul>
-									<li v-for="curso in cursos">{{curso.get("nome")}}</li>
-								</ul> 
+<!-- 							<select>
+								<option v-for="curso in cursos" v-bind:value="curso.id">{{ curso.nome }}</option>
 							</select>
 							<label>A qual curso pertence essa disciplina?</label> -->
-							<select>
-							  <option v-for="curso in cursos" v-bind:value="curso.id">
-							    {{ curso.get("nome") }}
-							  </option>
-							</select>
 						</div>
 		            </div>
 		            <div class="row">
@@ -217,6 +211,7 @@ module.exports = {
 						}
 						self.$data.cursos = cursos
 						self.$data.instituicoes = instituicoes
+
 					})
 				})
 			})

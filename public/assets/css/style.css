@@ -225,3 +225,16 @@ a:hover, a:visited, a:link, a:active {
 [contentEditable=true]:empty:not(:focus)::before{
     content:attr(data-ph)
 }
+
+/*#app {
+  text-align: center;
+}
+img {
+  width: 30%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+button {
+  
+}*/
