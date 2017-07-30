@@ -1,23 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
-	<title>Parse Server Example</title>
+	<title>CadernOnline | Gerenciador Acadêmico</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+
   </head>
 
-  <body>
-	<div class="container">
-		<div class="row text-center">
-			<div class="col-md-12">
-				<h2> Bem vindo ao CadernOnline</h2>
-			</div>
-		</div>
+  <body> 
+	<div id="app">
+		<div class="progress light-blue lighten-1">
+	      <div class="indeterminate light-blue darken-3"></div>
+	  	</div>
+		<ul id='menu' class='dropdown-content' v-if="Auth.isLoggedIn()">
+			<li v-for="item in menu">
+				<a v-bind:href="item.url" class="blue-text"><i class="material-icons">{{item.icon}}</i>{{item.name}}</a>
+			</li>
+		</ul>
+		<nav class="light-blue lighten-1" role="navigation">
+		    <div class="nav-wrapper container">
+				<a href="#/" class="brand-logo" to="/">
+					<span>CadernOnline</span>
+				</a>
+				<ul class="right">
+			      	<li>
+						<a id="save" class="waves-effect waves-blue btn-flat white-text" v-if="$route.path.indexOf('/caderno') == 0"><i class="material-icons left">save</i> Salvar</a>
+					</li>
+			      	<li>
+			      		<a class='dropdown-button' href='#!' data-activates='menu' v-if="Auth.isLoggedIn()"> <img :src="user.get('profileImageUrl')" alt="" class="circle responsive-img"> {{user.get("name")}} <i class="material-icons right">arrow_drop_down</i></a>
+					</li>
+			    </ul>
+				
+		    </div>
+	  	</nav>
+	  
+  		<component v-bind:is="currentView"></component>	
+		
 	</div>
-	
-	<script src="js/jquery.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/parse.min.js"></script>
-	<!--<script src="js/caderno-on-line.js"></script>-->
+
+	<script type="text/javascript" src="js/libs/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/libs/parse.js"></script>
+	<script type="text/javascript" src="js/libs/vue.js"></script>
+	<script type="text/javascript" src="js/libs/webcam.js"></script>
+	<script type="text/javascript" src="js/libs/vue-router.js"></script>
+	<script type="text/javascript" src="js/libs/httpVueLoader.js"></script>
+	<script type="text/javascript" src="js/libs/axios.js"></script>
+	<script type="text/javascript" src="js/api.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('select').material_select();
+			$("#app .progress").hide()
+		});
+	</script>
+
   </body>
 </html>

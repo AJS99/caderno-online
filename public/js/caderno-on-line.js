@@ -7,9 +7,9 @@ var Anotacao = Parse.Object.extend("Anotacao");
 var Curso = Parse.Object.extend("Curso");
 
 Parse.Object.registerSubclass('Instituicao', Instituicao);
+Parse.Object.registerSubclass('Curso', Curso);
 Parse.Object.registerSubclass('Disciplina', Disciplina);
 Parse.Object.registerSubclass('Anotacao', Anotacao);
-Parse.Object.registerSubclass('Curso', Curso);
 
 /*var data = new Date();
 console.log(data);
