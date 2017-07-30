@@ -118,9 +118,11 @@ module.exports = {
 		$('#btn-foto').click(function(){
 			Webcam.set({
 				width: 320,
-				height: 320,
+				height: 240,
 				dest_width: 640,
-				dest_height: 640,
+				dest_height: 480,
+				crop_width: 480,
+				crop_height: 480,
 				image_format: 'jpeg',
 				jpeg_quality: 95
 			});
