@@ -1,5 +1,5 @@
 <template>
-	<div id="dashboard" class="container">
+	<main id="dashboard" class="container">
 		<div>
 			<div id="ultimos-cadernos" class="row"> 
 				<div class="col s12">
@@ -128,7 +128,7 @@
 	      </div>
 		</div>
 		</div>
-		</div>
+	</main>
 </template>
 	
 <script>
@@ -142,6 +142,11 @@ module.exports = {
 		}
 	},
 	created () {
+		if(!Auth.isLoggedIn()){
+			this.$router.push('/404')
+			return
+		} 
+			
 		this.loadAll()
 	},
 	mounted() {
@@ -250,7 +255,8 @@ module.exports = {
 			      "nome": nomeCurso,
 			      "nomeCoordenador": nomeCoordenador,
 			      "descricao": descricao,
-			      "instituicao": self.$data.instituicoes[0]
+			      "instituicao": self.$data.instituicoes[0],
+			      "user": Auth.getCurrentUser()
 			    }, 
 			    new CursoClass(),
 			    function(obj) {
@@ -267,7 +273,8 @@ module.exports = {
 			      "nome": nomeDisciplina,
 			      "nomeProfessor": nomeProfessor,
 			      "descricao": descricaoDisciplina,
-			      "curso": curso
+			      "curso": curso,
+			      "user": Auth.getCurrentUser()
 			    }, 
 			    new DisciplinaClass(),
 			    function(obj) {

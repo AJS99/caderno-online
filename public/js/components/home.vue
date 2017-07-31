@@ -1,19 +1,14 @@
 <template>
-	<header>
-		<div class="section no-pad-bot" id="index-banner">
-			<div class="container">
-			<br><br>
-				<div class="section">
-					<div class="home-wrap"> 
-						<h1 class="logo"><img src="assets/images/home-logo.png"> CadernOnline</h1>
-						<p id="home-p" class="header col s12 light"> Seja bem vindo ao CadernOnline. <br>Aqui sua vida acadêmica será bem mais fácil de gerenciar e controlar.</p>
+	<main>
+		<section id="index-banner" class="section no-pad-bot">
+			<div class="home-wrap"> 
+				<h1 class="logo"><img src="assets/images/home-logo.png"> CadernOnline</h1>
+				<p id="home-p" class="header col s12 light"> Seja bem vindo ao CadernOnline. <br>Aqui sua vida acadêmica será bem mais fácil de gerenciar e controlar.</p>
 
-						<!-- Using value --> 
-						<b-btn id="btn-login" class="btn-large waves-effect waves-light blue">Entrar</b-btn>
-					</div>
-				</div>
+				<!-- Using value --> 
+				<b-btn id="btn-login" class="btn-large waves-effect waves-light blue">Entrar</b-btn>
 			</div>
-		</div>
+		</section>
 
 		<div id="modalEntrar" class="modal modal-fixed-footer">
 			<div class="modal-content">
@@ -81,7 +76,7 @@
 				<a id="btn-user-entrar" class="modal-action waves-effect waves-green btn-flat">Entrar</a>
 			</div>
 		</div>
-	</header>
+	</main>
 </template>
 
 <script>

@@ -1,14 +1,12 @@
 <template>
-	<div id="caderno">
+	<main id="caderno">
 	  	<div class="row">
 	      <div class="col s3"> 
 			<ul id="assuntos" class="collection with-header">
 				<li class="collection-header" v-if="caderno">
 					<h4>{{caderno.get("nome")}}</h4>
 				</li>
-				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="(assunto, i) in assuntos" v-bind:class="{ active: i == 0 }">
-				<span v-if="i == 0">{{onAssuntoClicked(assunto.id)}}</span>
-				{{assunto.get("assunto")}}</li>
+				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="(assunto, i) in assuntos" v-bind:class="{ active: i == 0 }"><span v-if="i == 0">{{onAssuntoClicked(assunto.id)}}</span>{{assunto.get("assunto")}} <i>{{assunto.createdAt | format}}</i></li>
 			</ul>
 			<a id="btn-cadastrar-anotacao" class="btn-floating btn-large waves-effect waves-light red">
 				<i class="material-icons">add</i>
@@ -91,7 +89,7 @@
 		      </div>
 			</div>
 	    </div>
-	</div>  
+	</main>  
 </template>
 
 <script>
@@ -106,6 +104,11 @@ module.exports = {
 		}
 	},
 	created () {
+		if(!Auth.isLoggedIn()){
+			this.$router.push('/404')
+			return
+		} 
+		
 		$("#app .progress").show()
 		this.loadAll()
 	},
@@ -182,6 +185,11 @@ module.exports = {
 		$('.nav-wrapper #save').click(function(){
 			self.updateCurrentAnotacao()
 		})
+	},
+	filters: {
+	    format: function (date) {
+	      return moment(date).format('D/MM/YY');
+	    }
 	},
 	methods: {
 		loadAll: function(){
@@ -266,7 +274,8 @@ module.exports = {
 			Api.create({
 			      "assunto": nomeAssunto,
 			      "disciplina": disciplina,
-			      "texto": ""
+			      "texto": "",
+			      "user": Auth.getCurrentUser()
 			    }, 
 			    new AnotacaoClass(),
 			    function(obj) {

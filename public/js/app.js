@@ -1,15 +1,15 @@
 const router = new VueRouter({
   	routes: [
-  	  { path: '/' },
-      { path: '/entrar' },
-      { path: '/cadastro' },
-      { path: '/dashboard' },
-  	  { path: '/sobre' },
-  	  { path: '/instituicao/:id' },
-  	  { path: '/curso/:id' },
-  	  { path: '/caderno/:id' },
-  	  { path: '/anotacao/:id' },
-  	  { path: '*' }
+  	  { path: '/', name: 'home' },
+      { path: '/entrar', name: 'entrar' },
+      { path: '/cadastro', name: 'cadastro' },
+      { path: '/dashboard', name: 'dashboard' },
+  	  { path: '/sobre', name: 'sobre' },
+  	  { path: '/instituicao/:id', name: 'instituicao' },
+  	  { path: '/curso/:id', name: 'curso' },
+  	  { path: '/caderno/:id', name: 'caderno' },
+  	  { path: '/anotacao/:id', name: 'anotacao' },
+  	  { path: '*', name: 'notFound' }
     ] 
 })
 

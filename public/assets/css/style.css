@@ -2,9 +2,8 @@
     background-image: url(../images/home-page/Background-home-page-1.jpg);
     background-size: cover;
     background-position: center;
-    position: absolute;
     width: 100%;
-   }
+}
 
 .collapsible-body h4, strong{
     color: #fff;
@@ -15,19 +14,36 @@
     color: #646964;
 }
 
+#app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 #app .progress {
     position: absolute;
     margin: 0;
 }
 
 .home-wrap {
-    display: block;
-    max-width: 590px;
-    margin: 0 auto;
-    padding: 0 20px;
-    margin-top: 80px;
-    margin-bottom: 90px;
+    max-width: 500px !important;
     text-align: center;
+}
+
+main {
+    flex: 1 1 auto;
+}
+main section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main section .home-wrap {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+    max-width: 50%;
 }
 
 .logo {
@@ -233,6 +249,9 @@ a:hover, a:visited, a:link, a:active {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+}
+#caderno #assuntos li i {
+    float: right;
 }
 
 [contentEditable=true]:empty:not(:focus)::before{

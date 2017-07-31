@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<main>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 list-group">
@@ -14,7 +14,7 @@
 					</div>
 				</div>
 			</div>      
-	</div>  
+	</main>  
 </template>
 	
 <script>
@@ -33,6 +33,11 @@ module.exports = {
 		}
 	},
 	created () {
+		if(!Auth.isLoggedIn()){
+			this.$router.push('/404')
+			return
+		} 
+		
 		var updateHeader = this.updateHeader
 		Api.getById("B6zU7uWbu3", InstituicaoClass,
 			function(obj){
