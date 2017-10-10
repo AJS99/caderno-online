@@ -10,6 +10,37 @@
 			</div>
 		</section>
 
+		<section class="section no-pad-bot">
+			<div class="home-wrap"> 
+				<h1 class="logo">Apresentação</h1>
+				<p id="home-p" class="header col s12 light"> EM CRIAÇÃO.</p>
+			</div>
+		</section>
+
+		<footer class="page-footer light-blue">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">CadernOnline</h5>
+                <p class="grey-text text-lighten-4">Sua vida academica mais acessível.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Experimente agora</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#">Criar Conta</a></li>
+                  <li><a class="grey-text text-lighten-3 " href="#">Entrar</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © Todos os direitos reservados
+            <a class="grey-text text-lighten-4 right" href="raccoonsoft.info">Desenvolvido por Raccoon Soft</a>
+            </div>
+          </div>
+        </footer>
+
 		<div id="modalEntrar" class="modal modal-fixed-footer">
 			<div class="modal-content">
 				<h4 id="text-modal">Acesso ao CadernOnline</h4>

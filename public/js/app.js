@@ -10,7 +10,7 @@ const router = new VueRouter({
   	  { path: '/caderno/:id', name: 'caderno' },
   	  { path: '/anotacao/:id', name: 'anotacao' },
   	  { path: '*', name: 'notFound' }
-    ] 
+    ]
 })
 
 new Vue({

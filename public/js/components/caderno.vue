@@ -44,7 +44,7 @@
 							<i class="material-icons">attach_file</i>
 						</a>
 								<!-- <input type="file" @change="onFileChange" accept="text/plain,text/rtf,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/image/*,video/*" style="display: none;"> -->
-								<input id="input-file" type="file" accept="image/png, image/jpeg" v-on:change="previewFile()" style="display: none;">					
+								<input id="input-file" type="file" accept="image/png, image/jpeg, application/pdf" v-on:change="previewFile()" style="display: none;">					
 					</li>
 					<li><a id="btn-audio" class="btn-floating yellow darken-1"><i class="material-icons">mic</i></a></li>
 					<li>

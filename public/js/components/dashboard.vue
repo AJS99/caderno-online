@@ -3,15 +3,10 @@
 		<div>
 			<div id="ultimos-cadernos" class="row"> 
 				<div class="col s12">
-					<h2>Últimos cadernos</h2>
+					<h2>Instituições</h2>
 					<div class="row">
-				      <div class="col s4" v-for="caderno in ultimosCadernos">
-		        		<a href="#">
-				        	<div class="card-panel teal center-align z-depth-3">
-								<h4 class="truncate">{{caderno.get("nome")}}</h4>
-								<strong class="truncate">{{caderno.get("descricao")}}</strong>
-				        	</div>
-						</a>
+						<div class="col s4">
+							<h4>Facol</h4>
 				      </div>
 				    </div>
 				</div>
@@ -138,7 +133,7 @@ module.exports = {
 			ultimosCadernos: [],
 			cadernos: [],
 			cursos: null,
-			instituicao: null
+			instituicoes: null
 		}
 	},
 	created () {
