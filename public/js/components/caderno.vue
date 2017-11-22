@@ -6,7 +6,9 @@
 				<li class="collection-header" v-if="caderno">
 					<h4>{{caderno.get("nome")}}</h4>
 				</li>
-				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="(assunto, i) in assuntos" v-bind:class="{ active: i == 0 }"><span v-if="i == 0">{{onAssuntoClicked(assunto.id)}}</span>{{assunto.get("assunto")}} <i>{{assunto.createdAt | format}}</i></li>
+				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="(assunto, i) in assuntos" v-bind:class="{ active: i == 0 }"><span v-if="i == 0">
+					{{onAssuntoClicked(assunto.id)}}</span>{{assunto.get("assunto") == undefined || assunto.get("assunto") == "" ? "Sem título" : assunto.get("assunto")}} <i>{{assunto.createdAt | format}}</i>
+				</li>
 			</ul>
 			<a id="btn-cadastrar-anotacao" class="btn-floating btn-large waves-effect waves-light red">
 				<i class="material-icons">add</i>
@@ -28,7 +30,7 @@
 	      <div class="col s9">
 	      	<div id="assunto-container">
 		      	<div id="assunto">
-		      		<div id="text" contentEditable="true" data-ph="Texto..."></div>
+		      		<div id="text" data-ph="Seu texto aqui..."></div>
 		      		<!--<img src="" height="200" style=" position: relative; height: 350px; padding-left: 250px;"><br><br>-->
 
 		      		<!--<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>-->
@@ -40,22 +42,11 @@
 				</a>
 				<ul>
 					<li>
-						<a  id="btn-anexo" type="file" class="btn-floating red">
+						<a  id="btn-anexo" type="file" class="btn-floating blue">
 							<i class="material-icons">attach_file</i>
 						</a>
-								<!-- <input type="file" @change="onFileChange" accept="text/plain,text/rtf,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/image/*,video/*" style="display: none;"> -->
-								<input id="input-file" type="file" accept="image/png, image/jpeg, application/pdf" v-on:change="previewFile()" style="display: none;">					
-					</li>
-					<li><a id="btn-audio" class="btn-floating yellow darken-1"><i class="material-icons">mic</i></a></li>
-					<li>
-						<a id="btn-video" class="btn-floating green">
-							<i class="material-icons">videocam</i>
-						</a>
-					</li>
-					<li>
-						<a id="btn-foto" href="#modal-webcam" class="btn-floating blue modal-trigger">
-							<i class="material-icons">camera_alt</i>
-						</a>
+						<!-- <input type="file" @change="onFileChange" accept="text/plain,text/rtf,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/image/*,video/*" style="display: none;"> -->
+						<input id="input-file" type="file" accept="image/png, image/jpeg, application/pdf" v-on:change="previewFile()" style="display: none;">					
 					</li>
 				</ul>
 			</div>
@@ -114,7 +105,10 @@ module.exports = {
 	},
 	mounted() {
 		var self = this
-
+		new MediumEditor('#text', {
+				placeholder: false
+		});
+		
 		navigator.getUserMedia(
 		    {
 		      video: true
@@ -130,33 +124,24 @@ module.exports = {
 		$('.modal').modal();
 
 		// FUNÇÕES DO CADERNO - INICIO
-		$('#btn-foto').click(function(){
-			Webcam.set({
-				width: 320,
-				height: 240,
-				dest_width: 640,
-				dest_height: 480,
-				crop_width: 480,
-				crop_height: 480,
-				image_format: 'jpeg',
-				jpeg_quality: 95
-			});
-			Webcam.attach('#webcam');
-		})
-		$('#btn-video').click(function(){
-			$('#text').attr('contenteditable','true')
-			console.log("função de filmar")	
-		})
-		$('#btn-audio').click(function(){
-			$('#text').attr('contenteditable','true')
-			console.log("função de gravar áudio")	
-		})
+		// $('#btn-foto').click(function(){
+		// 	Webcam.set({
+		// 		width: 320,
+		// 		height: 240,
+		// 		dest_width: 640,
+		// 		dest_height: 480,
+		// 		crop_width: 480,
+		// 		crop_height: 480,
+		// 		image_format: 'jpeg',
+		// 		jpeg_quality: 95
+		// 	});
+		// 	Webcam.attach('#webcam');
+		// })
 		$('#btn-anexo').click(function(){
 			$("#input-file").click()
 			self.previewFile()
-
+		
 			$('#text').attr('contenteditable','true')
-			console.log("função de anexar")	
 		})
 
 		// FUNÇÕES DO CADERNO - FIM
@@ -184,6 +169,12 @@ module.exports = {
 
 		$('.nav-wrapper #save').click(function(){
 			self.updateCurrentAnotacao()
+		})
+		$('.nav-wrapper #download').click(function(){
+			self.downloadCurrentAnotacao()
+		})
+		$('.nav-wrapper #print').click(function(){
+			self.printCurrentAnotacao()
 		})
 	},
 	filters: {
@@ -298,6 +289,25 @@ module.exports = {
 			    }
 			)
 		},
+		downloadCurrentAnotacao: function(){
+			var nome = this.$data.currentAssunto.get("assunto")
+			var texto = $('#text').html()
+			var doc = new jsPDF();
+			doc.fromHTML($('#text').get(0), 15, 15)
+			doc.save(nome+".pdf")
+		},
+		printCurrentAnotacao: function(){
+			var texto = $('#text').html()
+			var doc = new jsPDF();
+			doc.fromHTML($('#text').get(0), 15, 15)
+			doc.autoPrint()
+			var docPdf = doc.output('datauri')
+			var iframe = "<style>html, body {margin: 0; padding: 0;}</style></style><iframe style='width: 100%; height: 100%; margin: 0; padding: 0;' src='"+docPdf+"'></iframe>"
+			var x = window.open();
+			x.document.open();
+			x.document.write(iframe);
+			x.document.close();
+		},
 
 		onFileChange(e) {
 			var files = e.target.files || e.dataTransfer.files;
@@ -327,7 +337,7 @@ module.exports = {
 			  	var name = file.name
 			  	var parseFile = new Parse.File(name, file)
 			  	parseFile.save().then(function() {
-				  $("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
+				  $("#text").append("<br><br><a href='"+parseFile.url()+"' target='_blank'>"+parseFile.name()+"</a><br><br>")
 				  $("#app .progress").hide()
 				}, function(error) {
 				  $("#app .progress").hide()

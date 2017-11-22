@@ -5,10 +5,6 @@
     width: 100%;
 }
 
-.collapsible-body h4, strong{
-    color: #fff;
-}
-
 #home-p {
     font-size: 1.60rem;
     color: #646964;
@@ -180,7 +176,10 @@ a:hover, a:visited, a:link, a:active {
 #todos-cursos {
     margin-top: 20px;
 }
-
+#todos-cursos .collapsible-body h4,
+#todos-cursos strong {
+    color: #fff;
+}
 #todos-cursos .collapsible .collapsible-header {
     font-size: 22px;
     position: relative;
@@ -278,6 +277,9 @@ a:hover, a:visited, a:link, a:active {
     margin-right: 10px;
 }
 
+img, video, audio {
+    display: block;
+}
 
 /*#app {
   text-align: center;
