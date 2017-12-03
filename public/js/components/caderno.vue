@@ -80,7 +80,7 @@
 		      </div>
 			</div>
 
-			<div id="modal-webcam" class="modal modal-fixed-footer">
+			<!-- <div id="modal-webcam" class="modal modal-fixed-footer">
 			   <div class="modal-content">
 			      	<h4>Capturar imagem</h4>
 		         	<div id="webcam"></div>
@@ -89,7 +89,7 @@
 		         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
 		         <a id="btn-salvar-imagem-webcam" class="modal-action waves-effect waves-green btn-flat" v-on:click="onSaveFotoClicked()">Salvar</a>
 		      </div>
-			</div>
+			</div> -->
 	    </div>
 	</main>  
 </template>
@@ -121,18 +121,6 @@ module.exports = {
 				placeholder: false
 		});
 		self.toggleEdit(false)
-		
-		navigator.getUserMedia(
-		    {
-		      video: true
-		    },
-		    function(localMediaStream) {
-	    		console.log(localMediaStream)
-		    },
-		    function(err) {
-		      console.log(err);
-		    }
-	  	)
 
 		$('.modal').modal()
 		$('#text a, .medium-editor-toolbar-anchor-preview-inner').bind('click', function(e){
@@ -269,19 +257,19 @@ module.exports = {
 			this.loadAssuntoText(assunto)
 		},
 		onSaveFotoClicked: function(){
-	       	Webcam.snap(function(data) {
-				$("#app .progress").show()
-	        	var parseFile = new Parse.File("foto.jpg", {base64: data})
-          		parseFile.save().then(function() {
-		          	$("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
-		          	$("#app .progress").hide()
-		          	$('#modal-webcam').modal('close')
-		          	Webcam.reset()
-	        	}, function(error) {
-	          		console.log(error)
-		          	$("#app .progress").hide()
-	        	});
-	      	});
+	      //  	Webcam.snap(function(data) {
+				// $("#app .progress").show()
+	      //   	var parseFile = new Parse.File("foto.jpg", {base64: data})
+        //   		parseFile.save().then(function() {
+		    //       	$("#text").append("<br><br><img src='"+parseFile.url()+"' class='image-body responsive-img'></img><br><br>")
+		    //       	$("#app .progress").hide()
+		    //       	$('#modal-webcam').modal('close')
+		    //       	Webcam.reset()
+	      //   	}, function(error) {
+	      //     		console.log(error)
+		    //       	$("#app .progress").hide()
+	      //   	});
+	      // 	});
 		},
 		getAssuntoPosition: function(assuntoId){
 			var assuntos = this.$data.assuntos
