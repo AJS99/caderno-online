@@ -313,6 +313,7 @@ textarea.materialize-textarea:focus:not([readonly])+label{
 
 #modalEntrar {
     height: 570px;
+    max-height: 90%;
 }
 #modalEntrar .tabs {
     margin-bottom: 10px;
