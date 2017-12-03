@@ -10,13 +10,13 @@
 
 		<section class="carousel carousel-slider center section" data-indicators="true">
 			<div id="btn-login" class="carousel-fixed-item center">
-				<a class="btn-large waves-effect waves-light blue white-text">Entrar</a>
+				<a class="btn-large waves-effect waves-light white-text light-blue">Entrar</a>
 			</div>
-			<div id="index-banner-1" class="carousel-item red white-text" href="#one!">
+			<div id="index-banner-1" class="carousel-item white-text" href="#one!">
 			</div>
-			<div id="index-banner-2" class="carousel-item amber white-text" href="#two!">
+			<div id="index-banner-2" class="carousel-item white-text" href="#two!">
 			</div>
-			<div id="index-banner-3" class="carousel-item green white-text" href="#three!">
+			<div id="index-banner-3" class="carousel-item white-text" href="#three!">
 			</div>
 		</section>
 
