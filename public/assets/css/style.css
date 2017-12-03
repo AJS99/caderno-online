@@ -232,8 +232,14 @@ a:hover, a:visited, a:link, a:active {
     float: none;
 }
 
-.input-field .prefix.active {
+.input-field .prefix.active,
+.tabs .tab a:hover, 
+.tabs .tab a.active,
+.tabs .tab a {
     color: #e67e22;
+}
+.tabs .indicator {
+    background-color: #e67e22;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]),
