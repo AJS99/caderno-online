@@ -1,18 +1,24 @@
 <template>
 	<main id="caderno">
 	  	<div class="row">
-	      <div class="col s3"> 
+	      <aside class="col s3"> 
 			<ul id="assuntos" class="collection with-header">
 				<li class="collection-header" v-if="caderno">
 					<h4>{{caderno.get("nome")}}</h4>
+					<div class="input-field">
+						<i class="material-icons prefix">search</i>
+						<input id="search" type="text">
+						<label for="search">Pesquisar</label>
+					</div>
+					<a id="btn-cadastrar-anotacao" class="btn waves-effect waves-light light-blue">
+						<i class="material-icons">add</i>
+					</a>
 				</li>
 				<li class="collection-item" v-on:click="onAssuntoClicked(assunto.id)" v-if="assuntos" v-for="(assunto, i) in assuntos" v-bind:class="{ active: i == 0 }"><span v-if="i == 0">
-					{{onAssuntoClicked(assunto.id)}}</span>{{assunto.get("assunto") == undefined || assunto.get("assunto") == "" ? "Sem título" : assunto.get("assunto")}} <i>{{assunto.createdAt | format}}</i>
+					{{onAssuntoClicked(assunto.id)}}</span><span class="title">{{assunto.get("assunto") == undefined || assunto.get("assunto") == "" ? "Sem título" : assunto.get("assunto")}}</span> <i>{{assunto.createdAt | format}}</i>
 				</li>
 			</ul>
-			<a id="btn-cadastrar-anotacao" class="btn-floating btn-large waves-effect waves-light red">
-				<i class="material-icons">add</i>
-			</a>
+			
 
 <!-- 			<div id="app">
 			  <div v-if="!image">
@@ -26,8 +32,8 @@
 			</div>
  -->			
 
-      	  </div>
-	      <div class="col s9">
+      	  </aside>
+	      <div id="assunto-col" class="col s9">
 	      	<div id="assunto-container">
 		      	<div id="assunto">
 		      		<div id="text" data-ph="Seu texto aqui..."></div>
@@ -38,15 +44,20 @@
 	      	</div>
 			<div id="edicao" class="fixed-action-btn horizontal">
 				<a class="btn-floating btn-large red">
-					<i class="material-icons">mode_edit</i>
+					<i class="material-icons">add</i>
 				</a>
 				<ul>
 					<li>
-						<a  id="btn-anexo" type="file" class="btn-floating blue">
-							<i class="material-icons">attach_file</i>
+						<a id="btn-anexar-pdf" type="file" class="btn-floating blue">
+							<i class="material-icons">picture_as_pdf</i>
 						</a>
-						<!-- <input type="file" @change="onFileChange" accept="text/plain,text/rtf,application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/image/*,video/*" style="display: none;"> -->
-						<input id="input-file" type="file" accept="image/png, image/jpeg, application/pdf" v-on:change="previewFile()" style="display: none;">					
+						<input id="input-pdf" type="file" accept="application/pdf" v-on:change="attachPdf()" style="display: none;">
+					</li>
+					<li>
+						<a id="btn-anexar-imagem" type="file" class="btn-floating green">
+							<i class="material-icons">collections</i>
+						</a>
+						<input id="input-image" type="file" accept="image/*" v-on:change="attachImage()" style="display: none;">
 					</li>
 				</ul>
 			</div>
@@ -58,14 +69,14 @@
 			      <h4>Novo Assunto</h4>
 			         <form class="col s12">
 		               <div class="input-field col s12">
-			                  <input id="nomeAssunto" type="text" class="validate">
-			                  <label for="nomeAssunto">Nome</label>
+											<input id="nomeAssunto" type="text">
+											<label for="nomeAssunto">Nome</label>
 			            </div>
 			         </form>
 			   </div>
 		      <div class="modal-footer">
-		         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-		         <a id="btn-salvar-anotacao" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+		         <a class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+		         <a id="btn-salvar-anotacao" class="modal-action waves-effect waves-green btn-flat green-text">Salvar</a>
 		      </div>
 			</div>
 
@@ -101,6 +112,7 @@ module.exports = {
 		} 
 		
 		$("#app .progress").show()
+		
 		this.loadAll()
 	},
 	mounted() {
@@ -108,6 +120,7 @@ module.exports = {
 		new MediumEditor('#text', {
 				placeholder: false
 		});
+		self.toggleEdit(false)
 		
 		navigator.getUserMedia(
 		    {
@@ -121,7 +134,14 @@ module.exports = {
 		    }
 	  	)
 
-		$('.modal').modal();
+		$('.modal').modal()
+		$('#text a, .medium-editor-toolbar-anchor-preview-inner').bind('click', function(e){
+			if(!self.isEditMode()){
+				e.preventDefault()
+				var win = window.open($(this).attr("href"), '_blank')
+				win.focus()
+			}
+		})
 
 		// FUNÇÕES DO CADERNO - INICIO
 		// $('#btn-foto').click(function(){
@@ -137,45 +157,61 @@ module.exports = {
 		// 	});
 		// 	Webcam.attach('#webcam');
 		// })
-		$('#btn-anexo').click(function(){
-			$("#input-file").click()
-			self.previewFile()
-		
-			$('#text').attr('contenteditable','true')
+		$('#btn-anexar-pdf').click(function(){
+			$("#input-pdf").click()
+		})
+		$('#btn-anexar-imagem').click(function(){
+			$("#input-image").click()
 		})
 
 		// FUNÇÕES DO CADERNO - FIM
 
-		// CREATE NEW ANOTAÇÃO - ASSUNTO
-
-		$('#btn-cadastrar-anotacao').click(function(){
-			$('.modal').modal()
-			$('#cadastrar-anotacao').modal('open')
-		})
-
 		$('#btn-salvar-anotacao').click(function(){
 			var nomeAssunto = $("#nomeAssunto").val()
 			
-			// TODO validar
+			if(nomeAssunto == ""){
+				Materialize.toast('<i class="material-icons">error</i> Nome não pode ser vazio', 2000)
+			} else {
+				self.saveAnotacao(nomeAssunto, self.$data.caderno, function(curso){
+					$('#cadastrar-anotacao').modal('close')
+					$("#nomeAssunto").val("")
 
-			self.saveAnotacao(nomeAssunto, self.$data.caderno, function(curso){
-				$('#cadastrar-anotacao').modal('close')
-				$("#nomeAssunto").val("")
-
-				Materialize.toast('<i class="material-icons">check</i> Assunto criado com sucesso', 4000)
-				self.loadAll()
-			})
+					Materialize.toast('<i class="material-icons">check</i> Assunto criado com sucesso', 4000)
+					self.loadAll()
+				})
+			}
 		})
 
 		$('.nav-wrapper #save').click(function(){
 			self.updateCurrentAnotacao()
 		})
-		$('.nav-wrapper #download').click(function(){
-			self.downloadCurrentAnotacao()
-		})
 		$('.nav-wrapper #print').click(function(){
 			self.printCurrentAnotacao()
 		})
+		$('.nav-wrapper #toggle-edit').click(function(){
+			self.toggleEdit(!self.isEditMode())
+		})
+		
+		setTimeout(function(){
+			$('#btn-cadastrar-anotacao').click(function(){
+				$('.modal').modal()
+				$('#cadastrar-anotacao').modal('open')
+			})
+			$('#search').keyup(function(){
+				var query = $(this).val().trim()
+				self.filter(query)
+			})
+			setTimeout(function(){
+				$('#btn-cadastrar-anotacao').click(function(){
+					$('.modal').modal()
+					$('#cadastrar-anotacao').modal('open')
+				})
+				$('#search').keyup(function(){
+					var query = $(this).val().trim()
+					self.filter(query)
+				})
+			}, 2000);
+		}, 1000);
 	},
 	filters: {
 	    format: function (date) {
@@ -226,10 +262,10 @@ module.exports = {
 			var assunto = this.$data.assuntos[assuntoPosition]
 			this.$data.currentAssunto = assunto
 
-			$('#assuntos li').each(function(){
+			$('#assuntos .collection-item').each(function(){
 				$(this).removeClass("active")
 			})
-			$('#assuntos li').eq(assuntoPosition + 1).addClass("active")
+			$('#assuntos .collection-item').eq(assuntoPosition).addClass("active")
 			this.loadAssuntoText(assunto)
 		},
 		onSaveFotoClicked: function(){
@@ -270,6 +306,7 @@ module.exports = {
 			    }, 
 			    new AnotacaoClass(),
 			    function(obj) {
+						console.log($("#search").val())
 		    	  callback(obj)
 			    },
 			    function(error) {
@@ -289,24 +326,8 @@ module.exports = {
 			    }
 			)
 		},
-		downloadCurrentAnotacao: function(){
-			var nome = this.$data.currentAssunto.get("assunto")
-			var texto = $('#text').html()
-			var doc = new jsPDF();
-			doc.fromHTML($('#text').get(0), 15, 15)
-			doc.save(nome+".pdf")
-		},
 		printCurrentAnotacao: function(){
-			var texto = $('#text').html()
-			var doc = new jsPDF();
-			doc.fromHTML($('#text').get(0), 15, 15)
-			doc.autoPrint()
-			var docPdf = doc.output('datauri')
-			var iframe = "<style>html, body {margin: 0; padding: 0;}</style></style><iframe style='width: 100%; height: 100%; margin: 0; padding: 0;' src='"+docPdf+"'></iframe>"
-			var x = window.open();
-			x.document.open();
-			x.document.write(iframe);
-			x.document.close();
+			window.print();
 		},
 
 		onFileChange(e) {
@@ -328,23 +349,63 @@ module.exports = {
 		removeImage: function (e) {
 			this.image = '';
 		},
-
-		previewFile() {
-		  	var fileUploadControl = $("#input-file")[0]
-		  	if (fileUploadControl.files.length > 0) {
+		attachPdf() {
+			var fileUploadControl = $("#input-pdf")[0]
+			if (fileUploadControl.files.length > 0) {
 				$("#app .progress").show()
-			  	var file = fileUploadControl.files[0]
-			  	var name = file.name
-			  	var parseFile = new Parse.File(name, file)
-			  	parseFile.save().then(function() {
-				  $("#text").append("<br><br><a href='"+parseFile.url()+"' target='_blank'>"+parseFile.name()+"</a><br><br>")
-				  $("#app .progress").hide()
+				var regexIsImage = /\.(jpg|jpeg|png)$/
+				var file = fileUploadControl.files[0]
+				var name = getSlug(file.name)
+				var parseFile = new Parse.File(name, file)
+				parseFile.save().then(function() {
+					$("#text").append("<br><br><a href='"+parseFile.url()+"' target='_blank'>"+file.name+"</a><br><br>")
+					$("#app .progress").hide()
 				}, function(error) {
-				  $("#app .progress").hide()
-				  console.log(error)
+					$("#app .progress").hide()
+					console.log(error)
 				});
-
 			}
+		},
+		attachImage() {
+			var fileUploadControl = $("#input-image")[0]
+			if (fileUploadControl.files.length > 0) {
+				$("#app .progress").show()
+				var file = fileUploadControl.files[0]
+				var name = getSlug(file.name)
+				var parseFile = new Parse.File(name, file)
+				parseFile.save().then(function() {
+					$("#text").append("<br><br><img src='"+parseFile.url()+"'><br><br>")
+					$("#app .progress").hide()
+				}, function(error) {
+					$("#app .progress").hide()
+					console.log(error)
+				});
+			}
+		},
+		toggleEdit(editMode){
+			if(editMode){
+				$("#toggle-edit i").text("mode_edit")
+				$("#text").attr("contenteditable", true)
+				$("#edicao").css("visibility", "visible")
+			} else {
+				$("#toggle-edit i").text("remove_red_eye")
+				$("#text").attr("contenteditable", false)
+				$("#edicao").css("visibility", "hidden")
+			}
+		},
+		isEditMode(){
+			return $("#toggle-edit").text().trim() == "mode_edit"
+		},
+		filter(query){
+			query = getSlug(query)
+			$("#assuntos .collection-item").each(function(){
+				var title = getSlug($(this).find(".title").text())
+				if(title.startsWith(query)){
+						$(this).css("display", "block")
+				} else {
+						$(this).css("display", "none")
+				}
+			})
 		}
 
 	}   

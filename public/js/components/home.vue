@@ -1,24 +1,27 @@
 <template>
 	<main>
-		<section id="index-banner" class="section no-pad-bot">
+		<!-- <section id="index-banner" class="section no-pad-bot">
 			<div class="home-wrap"> 
 				<h1 class="logo"><img src="assets/images/home-logo.png"> CadernOnline</h1>
 				<p id="home-p" class="header col s12 light"> Seja bem vindo ao CadernOnline. <br>Aqui sua vida acadêmica será bem mais fácil de gerenciar e controlar.</p>
-
-				<!-- Using value --> 
 				<b-btn id="btn-login" class="btn-large waves-effect waves-light blue">Entrar</b-btn>
 			</div>
-		</section>
+		</section> -->
 
-		<section class="section no-pad-bot">
-			<div class="home-wrap"> 
-				<h1 class="logo">Apresentação</h1>
-				<p id="home-p" class="header col s12 light"> EM CRIAÇÃO.</p>
+		<section class="carousel carousel-slider center section" data-indicators="true">
+			<div id="btn-login" class="carousel-fixed-item center">
+				<a class="btn-large waves-effect waves-light blue white-text">Entrar</a>
+			</div>
+			<div id="index-banner-1" class="carousel-item red white-text" href="#one!">
+			</div>
+			<div id="index-banner-2" class="carousel-item amber white-text" href="#two!">
+			</div>
+			<div id="index-banner-3" class="carousel-item green white-text" href="#three!">
 			</div>
 		</section>
 
 		<footer class="page-footer light-blue">
-          <div class="container">
+          <!-- <div class="container">
             <div class="row">
               <div class="col l6 s12">
                 <h5 class="white-text">CadernOnline</h5>
@@ -32,7 +35,7 @@
                 </ul>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="footer-copyright">
             <div class="container">
             © Todos os direitos reservados
@@ -47,52 +50,49 @@
 				<div class="col s12">
 					<div class="row">
 						<div class="col s12">
-							<ul class="tabs">
-								<li id="tab-login" class="tab col s6"><a class="active" href="#form-login">Login</a></li>
-								<li id="tab-cadastro" class="tab col s6"><a href="#form-cadastro">Cadastrar</a></li>
+							<ul class="tabs tabs-fixed-width">
+								<li id="tab-login" class="tab"><a class="active" href="#form-login">Entrar</a></li>
+								<li id="tab-cadastro" class="tab"><a href="#form-cadastro">Registrar</a></li>
 							</ul>
 						</div>
 						<div id="form-login" class="col s12">
 							<form class="col s12">
 								<div class="row">
-									<a v-on:click="facebookLogin" id="btn-facebook" class="btn-large waves-effect waves-light btn blue col s12">
-										<i>Entrar com Facebook</i>
-									</a><br>
-								</div>
-								
-								<div class="divider"></div>
-
-								<div class="row">
 									<div class="input-field col s12">
-										<input id="login-email" type="email" class="validate" required>
+										<input id="login-email" type="email">
 										<label for="email">E-mail</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="login-senha" type="password" class="validate" required>
+										<input id="login-senha" type="password">
 										<label for="senha">Senha</label>
 									</div>
 								</div>
+								<div class="divider"></div>
+									<a v-on:click="facebookLogin" id="btn-facebook" class="btn-large waves-effect waves-light btn blue col s12">
+										<img src="assets/images/facebook.png">
+										<i>Entrar com Facebook</i>
+									</a><br>
 							</form>
 						</div>
 						<div id="form-cadastro" class="col s12">
 							<form class="col s12">
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="nome" type="text" class="validate" required>
+										<input id="nome" type="text">
 										<label for="nome">Nome Completo</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="email" type="email" class="validate" required> 
+										<input id="email" type="email"> 
 										<label for="email">E-mail</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="input-field col s12">
-										<input id="senha" type="password" class="validate" required>
+										<input id="senha" type="password">
 										<label for="senha">Senha</label>
 									</div>
 								</div>
@@ -102,9 +102,9 @@
 				</div>
 			</div>				
 			<div class="modal-footer">
-				<a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-				<a id="btn-user-cadastro" class="modal-action waves-effect waves-green btn-flat">Cadastrar</a>
-				<a id="btn-user-entrar" class="modal-action waves-effect waves-green btn-flat">Entrar</a>
+				<a class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+				<a id="btn-user-cadastro" class="modal-action waves-effect waves-green btn-flat green-text">Cadastrar</a>
+				<a id="btn-user-entrar" class="modal-action waves-effect waves-green btn-flat green-text">Entrar</a>
 			</div>
 		</div>
 	</main>
@@ -122,6 +122,8 @@ module.exports = {
 	},
 	mounted() {
 		var self = this
+		$('.carousel.carousel-slider').carousel({fullWidth: true});
+		setTimeout(this.autoplay, 5000);
 		$('#modalEntrar').tabs({
 			onShow: function(tab) {
 				var currentTabId = tab[0].id
@@ -142,14 +144,11 @@ module.exports = {
 		})
 
 		$('#btn-user-entrar').click(function(){
+			var email = $("#login-email").val()
+			var senha = $("#login-senha").val()
 
-			var login_email = $("#login-email").val()
-			var login_senha = $("#login-senha").val()
-
-			console.log(login_email)
-			console.log(login_senha)
-
-			self.login(login_email, login_senha, function(){
+			self.login(email, senha, function(){
+				console.log("success")
 			})
 		}),
 		
@@ -161,7 +160,6 @@ module.exports = {
 			// TODO validar
 
 			self.saveUser(nome, email, senha, function(){
-
 				Materialize.toast('Cadastro realizado com sucesso!', 8000, 'rounded')
 				alert("Cadastro realizado com sucesso!") 
 				$('#modalEntrar').modal('close')
@@ -173,15 +171,13 @@ module.exports = {
 	},
 	methods: {
 		login: function(email, senha, callback){
-
 			Auth.login(email, senha, function(user){
-				alert("Login realizado com sucesso!")
 				$('#modalEntrar').modal('close')
 
 				router.push('/dashboard')
 				location.reload()
 			}, function(error){
-				console.log(error)
+				Materialize.toast('<i class="material-icons">error</i> Usuário ou senha Inválidos', 2000)
 			})
 		},
 		facebookLogin: function(){
@@ -205,9 +201,13 @@ module.exports = {
 		    	  callback(obj)
 			    },
 			    function(error) {
-					Materialize.toast('<i class="material-icons">error</i> Erro ao realizar cadastro: ' + error.message, 4000)
+						Materialize.toast('<i class="material-icons">error</i> Email já cadastrado', 2000)
 			    }
 			)
+		},
+		autoplay: function() {
+				$('.carousel').carousel('next');
+				setTimeout(this.autoplay, 5000);
 		}
 	}
 }

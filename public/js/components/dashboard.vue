@@ -3,12 +3,7 @@
 		<div>
 			<div id="ultimos-cadernos" class="row"> 
 				<div class="col s12">
-					<h2>Instituições</h2>
-					<div class="row">
-						<div class="col s4">
-							<h4>Facol</h4>
-				      </div>
-				    </div>
+					<img id="instituicao-logo" src="http://facol.com/site/wp-content/uploads/2016/01/logo-site4.png">
 				</div>
 			</div>
 
@@ -58,13 +53,13 @@
 		         <form class="col s12">
 		            <div class="row">
 		               <div class="input-field col s12">
-		                  <input id="nomeCurso" type="text" class="validate">
+		                  <input id="nomeCurso" type="text">
 		                  <label for="nomeCurso">Nome do curso</label>
 		               </div>
 		            </div>
 		            <div class="row">
 		               <div class="input-field col s12">
-		                  <input id="nomeCoordenador" type="text" class="validate">
+		                  <input id="nomeCoordenador" type="text">
 		                  <label for="nomeCoordenador">Nome do coordenador</label>
 		               </div>
 		            </div>
@@ -78,8 +73,8 @@
 		      </div>
 		   </div>
 	      <div class="modal-footer">
-	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+	         <a class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat green-text">Salvar</a>
 	      </div>
 		</div>
 
@@ -92,7 +87,7 @@
 		         <form class="col s12">
 		            <div class="row">
 		               <div class="input-field col s6">
-		                  <input id="nomeDisciplina" type="text" class="validate">
+		                  <input id="nomeDisciplina" type="text">
 		                  <label for="nomeDisciplina">Nome da disciplina</label>
 		               </div>
 		               <div class="input-field col s6">
@@ -104,7 +99,7 @@
 		            </div>
 		            <div class="row">
 		               <div class="input-field col s12">
-		                  <input id="nomeProfessor" type="text" class="validate">
+		                  <input id="nomeProfessor" type="text">
 		                  <label for="nomeProfessor">Nome do professor</label>
 		               </div>
 		            </div>
@@ -118,8 +113,8 @@
 		      </div>
 		   </div>
 	      <div class="modal-footer">
-	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-	         <a id="btn-salvar-caderno" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+	         <a class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+	         <a id="btn-salvar-caderno" class="modal-action waves-effect waves-green btn-flat green-text">Salvar</a>
 	      </div>
 		</div>
 		</div>
@@ -157,17 +152,19 @@ module.exports = {
 			var nomeCoordenador = $("#nomeCoordenador").val()
 			var descricao = $("#descricao").val()
 			
-			// TODO validar
+			if(nomeCurso == "" || nomeCoordenador == ""){
+				Materialize.toast('<i class="material-icons">error</i> Nome do curso e coordenador não podem ser vazios', 3000)
+			} else {
+				self.saveCurso(nomeCurso, nomeCoordenador, descricao, function(curso){
+					$('#cadastrar-curso').modal('close')
+					$("#nomeCurso").val("")
+					$("#nomeCoordenador").val("")
+					$("#descricao").val("")
 
-			self.saveCurso(nomeCurso, nomeCoordenador, descricao, function(curso){
-				$('#cadastrar-curso').modal('close')
-				$("#nomeCurso").val("")
-				$("#nomeCoordenador").val("")
-				$("#descricao").val("")
-
-				Materialize.toast('<i class="material-icons">check</i> Curso criado com sucesso', 4000)
-				self.loadAll()
-			})
+					Materialize.toast('<i class="material-icons">check</i> Curso criado com sucesso', 4000)
+					self.loadAll()
+				})
+			}
 		})
 
 		//CREATE WEW DISCIPLINA (CADERNO)
@@ -185,18 +182,20 @@ module.exports = {
 			var cursoId = $("#select-cursos").val()
 			var curso = self.getCursoById(cursoId)
 			
-			// TODO validar
+			if(nomeDisciplina == "" || nomeProfessor == ""){
+				Materialize.toast('<i class="material-icons">error</i> Nome da disciplina e professor não podem ser vazios', 3000)
+			} else {
+				self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, curso, function(caderno){
+					$('#cadastrar-caderno').modal('close')
+					$("#nomeDisciplina").val("")
+					$("#nomeProfessor").val("")
+					$("#descricaoDisciplina").val("")
+					$("#select-cursos").val("")
 
-			self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, curso, function(caderno){
-				$('#cadastrar-caderno').modal('close')
-				$("#nomeDisciplina").val("")
-				$("#nomeProfessor").val("")
-				$("#descricaoDisciplina").val("")
-				$("#select-cursos").val("")
-
-				Materialize.toast('<i class="material-icons">check</i> Disciplina criado com sucesso! Novo caderno disponivel!', 4000)
-				self.loadAll()
-			})
+					Materialize.toast('<i class="material-icons">check</i> Disciplina criada com sucesso! Novo caderno disponivel!', 4000)
+					self.loadAll()
+				})
+			}
 		})
 	},
 	methods: {

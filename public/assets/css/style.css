@@ -1,5 +1,17 @@
-#index-banner{
+#index-banner-1{
     background-image: url(../images/home-page/Background-home-page-1.jpg);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+#index-banner-2{
+    background-image: url(../images/home-page/Background-home-page-2.jpg);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+}
+#index-banner-3{
+    background-image: url(../images/home-page/Background-home-page-3.jpg);
     background-size: cover;
     background-position: center;
     width: 100%;
@@ -29,7 +41,7 @@ main {
     flex: 1 1 auto;
 }
 main section {
-    height: 100vh;
+    height: 100vh !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,6 +52,10 @@ main section .home-wrap {
     -ms-flex: none;
     flex: none;
     max-width: 50%;
+}
+
+footer.page-footer {
+    padding-top: 0px;
 }
 
 .logo {
@@ -199,9 +215,45 @@ a:hover, a:visited, a:link, a:active {
 #caderno > .row .col.s9 {
     height: 100% !important;
 }
+#caderno #assuntos .collection-header {
+    text-align: center;
+}
 #caderno #assuntos .collection-item:hover {
     cursor: pointer !important;
 }
+#caderno #assuntos .collection-item.active {
+    background-color: #e67e22;
+}
+#caderno #assuntos #btn-cadastrar-anotacao {
+    width: 100%;
+    text-align: center;
+}
+#caderno #assuntos #btn-cadastrar-anotacao i {
+    float: none;
+}
+
+.input-field .prefix.active {
+    color: #e67e22;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom-color: #e67e22;
+    box-shadow: 0 1px 0 0 #e67e22;
+    -webkit-box-shadow: 0 1px 0 0 #e67e22;
+}
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label{
+    color: #e67e22;
+}
+.dropdown-content li>span {
+    color: #e67e22;
+}
+
 #caderno #assunto-container {
     display: table;
     border-spacing: 0;
@@ -259,6 +311,9 @@ a:hover, a:visited, a:link, a:active {
     color: gray;
 }
 
+#modalEntrar {
+    height: 570px;
+}
 #modalEntrar .tabs {
     margin-bottom: 10px;
     background-color: transparent !important;
@@ -269,6 +324,34 @@ a:hover, a:visited, a:link, a:active {
 #modalEntrar #btn-user-cadastro {
     display: none;
 }
+#modalEntrar .divider {
+    width: 80%;
+    margin: 0 auto;
+}
+#modalEntrar #btn-facebook {
+    background-color: #3b5998 !important;
+    width: auto;
+    float: none;
+    display: table;
+    margin: 0 auto;
+    margin-top: 40px;   
+}
+#modalEntrar #btn-facebook i {
+    font-size: 20px;
+}
+#modalEntrar #btn-facebook img {
+    height: 30px;
+    float: left;
+    margin-top: 12px;
+    margin-right: 20px;
+}
+#modalEntrar .tabs {
+    overflow-x: hidden;
+}
+
+#edicao {
+    visibility: hidden;
+}
 
 .nav-wrapper ul li img {
     width: 35px;
@@ -277,8 +360,34 @@ a:hover, a:visited, a:link, a:active {
     margin-right: 10px;
 }
 
-img, video, audio {
+#instituicao-logo {
     display: block;
+    margin: 40px auto;
+}
+
+#text img, video, audio {
+    display: block;
+}
+
+#text img, video {
+    max-width: 100%;
+    width: 800px;
+}
+
+@media print {
+    header, aside, #edicao, .medium-editor-toolbar, .medium-editor-toolbar-anchor-preview {
+        display: none;
+    }
+    #caderno #assunto:before {
+        border-left: none;
+    }
+    #caderno #assunto-col {
+        padding: 0;
+        width: 100%;
+    }
+    #caderno #assunto #text {
+        padding: 0;
+    }
 }
 
 /*#app {
