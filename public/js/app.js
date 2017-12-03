@@ -1,16 +1,30 @@
 const router = new VueRouter({
   	routes: [
-  	  { path: '/' },
-      { path: '/entrar' },
-      { path: '/cadastro' },
-      { path: '/dashboard' },
-  	  { path: '/sobre' },
-  	  { path: '/instituicao/:id' },
-  	  { path: '/curso/:id' },
-  	  { path: '/caderno/:id' },
-  	  { path: '/anotacao/:id' },
-  	  { path: '*' }
-    ] 
+  	  { path: '/', name: 'home' },
+      { path: '/entrar', name: 'entrar' },
+      { path: '/cadastro', name: 'cadastro' },
+      { path: '/dashboard', name: 'dashboard' },
+      { path: '/logout', name: 'logout' },
+  	  { path: '/sobre', name: 'sobre' },
+  	  { path: '/instituicao/:id', name: 'instituicao' },
+  	  { path: '/curso/:id', name: 'curso' },
+  	  { path: '/caderno/:id', name: 'caderno' },
+  	  { path: '/anotacao/:id', name: 'anotacao' },
+  	  { path: '*', name: 'notFound' }
+    ]
+})
+
+Vue.mixin({
+  methods: {
+    slugify: function (str) { 
+      return str.toString().toLowerCase()
+          .replace(/\s+/g, '-')           // Replace spaces with -
+          .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+          .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+          .replace(/^-+/, '')             // Trim - from start of text
+          .replace(/-+$/, '');            // Trim - from end of text
+    }
+  }
 })
 
 new Vue({
@@ -22,8 +36,8 @@ new Vue({
     showModal: false,
     menu: [ 
       { name: "Dashboard", url: "#/dashboard", icon: "dashboard"},
-      { name: "Perfil", url: "#/profile", icon: "person"},
-      { name: "Sair", url: "#/", icon: "input"}
+      // { name: "Perfil", url: "#/profile", icon: "person"},
+      { name: "Sair", url: "#/logout", icon: "input"}
     ]
   },
   created: function () {
@@ -43,9 +57,11 @@ new Vue({
        this.currentView = 'cadastro'
       } else if(path === '/dashboard'){
        this.currentView = 'dashboard'
-  		} else if(path === '/sobre'){
-			 this.currentView =  'sobre'
-  		} else if(path.startsWith('/instituicao/')){
+  		} else if(path === '/logout'){
+        this.currentView =  'logout'
+      } else if(path === '/sobre'){
+        this.currentView =  'sobre'
+      } else if(path.startsWith('/instituicao/')){
 			 this.currentView = 'instituicao'
   		} else if(path.startsWith('/curso/')){
 			 this.currentView = 'curso'
@@ -63,6 +79,7 @@ new Vue({
     entrar: httpVueLoader('js/components/entrar.vue'),
     cadastro: httpVueLoader('js/components/cadastro.vue'),
     dashboard: httpVueLoader('js/components/dashboard.vue'),
+    logout: httpVueLoader('js/components/logout.vue'),
     sobre: httpVueLoader('js/components/sobre.vue'),
     instituicao: httpVueLoader('js/components/instituicao.vue'),
     curso: httpVueLoader('js/components/curso.vue'),

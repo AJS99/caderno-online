@@ -10,6 +10,10 @@ module.exports = {
         }
     },
 	created () {
+		if(!Auth.isLoggedIn()){
+			this.$router.push('/404')
+			return
+		} 
 		console.log("INSTITUICAO")
 	},
 }

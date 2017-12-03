@@ -1,19 +1,9 @@
 <template>
-	<div id="dashboard" class="container">
+	<main id="dashboard" class="container">
 		<div>
 			<div id="ultimos-cadernos" class="row"> 
 				<div class="col s12">
-					<h2>Últimos cadernos</h2>
-					<div class="row">
-				      <div class="col s4" v-for="caderno in ultimosCadernos">
-		        		<a href="#">
-				        	<div class="card-panel teal center-align z-depth-3">
-								<h4 class="truncate">{{caderno.get("nome")}}</h4>
-								<strong class="truncate">{{caderno.get("descricao")}}</strong>
-				        	</div>
-						</a>
-				      </div>
-				    </div>
+					<img id="instituicao-logo" src="http://facol.com/site/wp-content/uploads/2016/01/logo-site4.png">
 				</div>
 			</div>
 
@@ -63,13 +53,13 @@
 		         <form class="col s12">
 		            <div class="row">
 		               <div class="input-field col s12">
-		                  <input id="nomeCurso" type="text" class="validate">
+		                  <input id="nomeCurso" type="text">
 		                  <label for="nomeCurso">Nome do curso</label>
 		               </div>
 		            </div>
 		            <div class="row">
 		               <div class="input-field col s12">
-		                  <input id="nomeCoordenador" type="text" class="validate">
+		                  <input id="nomeCoordenador" type="text">
 		                  <label for="nomeCoordenador">Nome do coordenador</label>
 		               </div>
 		            </div>
@@ -83,8 +73,8 @@
 		      </div>
 		   </div>
 	      <div class="modal-footer">
-	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+	         <a class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+	         <a id="btn-salvar-curso" class="modal-action waves-effect waves-green btn-flat green-text">Salvar</a>
 	      </div>
 		</div>
 
@@ -97,7 +87,7 @@
 		         <form class="col s12">
 		            <div class="row">
 		               <div class="input-field col s6">
-		                  <input id="nomeDisciplina" type="text" class="validate">
+		                  <input id="nomeDisciplina" type="text">
 		                  <label for="nomeDisciplina">Nome da disciplina</label>
 		               </div>
 		               <div class="input-field col s6">
@@ -109,7 +99,7 @@
 		            </div>
 		            <div class="row">
 		               <div class="input-field col s12">
-		                  <input id="nomeProfessor" type="text" class="validate">
+		                  <input id="nomeProfessor" type="text">
 		                  <label for="nomeProfessor">Nome do professor</label>
 		               </div>
 		            </div>
@@ -123,12 +113,12 @@
 		      </div>
 		   </div>
 	      <div class="modal-footer">
-	         <a class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-	         <a id="btn-salvar-caderno" class="modal-action waves-effect waves-green btn-flat">Salvar</a>
+	         <a class="modal-action modal-close waves-effect waves-red btn-flat red-text">Cancelar</a>
+	         <a id="btn-salvar-caderno" class="modal-action waves-effect waves-green btn-flat green-text">Salvar</a>
 	      </div>
 		</div>
 		</div>
-		</div>
+	</main>
 </template>
 	
 <script>
@@ -138,10 +128,15 @@ module.exports = {
 			ultimosCadernos: [],
 			cadernos: [],
 			cursos: null,
-			instituicao: null
+			instituicoes: null
 		}
 	},
 	created () {
+		if(!Auth.isLoggedIn()){
+			this.$router.push('/404')
+			return
+		} 
+			
 		this.loadAll()
 	},
 	mounted() {
@@ -157,17 +152,19 @@ module.exports = {
 			var nomeCoordenador = $("#nomeCoordenador").val()
 			var descricao = $("#descricao").val()
 			
-			// TODO validar
+			if(nomeCurso == "" || nomeCoordenador == ""){
+				Materialize.toast('<i class="material-icons">error</i> Nome do curso e coordenador não podem ser vazios', 3000)
+			} else {
+				self.saveCurso(nomeCurso, nomeCoordenador, descricao, function(curso){
+					$('#cadastrar-curso').modal('close')
+					$("#nomeCurso").val("")
+					$("#nomeCoordenador").val("")
+					$("#descricao").val("")
 
-			self.saveCurso(nomeCurso, nomeCoordenador, descricao, function(curso){
-				$('#cadastrar-curso').modal('close')
-				$("#nomeCurso").val("")
-				$("#nomeCoordenador").val("")
-				$("#descricao").val("")
-
-				Materialize.toast('<i class="material-icons">check</i> Curso criado com sucesso', 4000)
-				self.loadAll()
-			})
+					Materialize.toast('<i class="material-icons">check</i> Curso criado com sucesso', 4000)
+					self.loadAll()
+				})
+			}
 		})
 
 		//CREATE WEW DISCIPLINA (CADERNO)
@@ -185,18 +182,20 @@ module.exports = {
 			var cursoId = $("#select-cursos").val()
 			var curso = self.getCursoById(cursoId)
 			
-			// TODO validar
+			if(nomeDisciplina == "" || nomeProfessor == ""){
+				Materialize.toast('<i class="material-icons">error</i> Nome da disciplina e professor não podem ser vazios', 3000)
+			} else {
+				self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, curso, function(caderno){
+					$('#cadastrar-caderno').modal('close')
+					$("#nomeDisciplina").val("")
+					$("#nomeProfessor").val("")
+					$("#descricaoDisciplina").val("")
+					$("#select-cursos").val("")
 
-			self.saveCaderno(nomeDisciplina, nomeProfessor, descricaoDisciplina, curso, function(caderno){
-				$('#cadastrar-caderno').modal('close')
-				$("#nomeDisciplina").val("")
-				$("#nomeProfessor").val("")
-				$("#descricaoDisciplina").val("")
-				$("#select-cursos").val("")
-
-				Materialize.toast('<i class="material-icons">check</i> Disciplina criado com sucesso! Novo caderno disponivel!', 4000)
-				self.loadAll()
-			})
+					Materialize.toast('<i class="material-icons">check</i> Disciplina criada com sucesso! Novo caderno disponivel!', 4000)
+					self.loadAll()
+				})
+			}
 		})
 	},
 	methods: {
@@ -250,7 +249,8 @@ module.exports = {
 			      "nome": nomeCurso,
 			      "nomeCoordenador": nomeCoordenador,
 			      "descricao": descricao,
-			      "instituicao": self.$data.instituicoes[0]
+			      "instituicao": self.$data.instituicoes[0],
+			      "user": Auth.getCurrentUser()
 			    }, 
 			    new CursoClass(),
 			    function(obj) {
@@ -267,7 +267,8 @@ module.exports = {
 			      "nome": nomeDisciplina,
 			      "nomeProfessor": nomeProfessor,
 			      "descricao": descricaoDisciplina,
-			      "curso": curso
+			      "curso": curso,
+			      "user": Auth.getCurrentUser()
 			    }, 
 			    new DisciplinaClass(),
 			    function(obj) {

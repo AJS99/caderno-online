@@ -63,13 +63,10 @@ var Auth = {
 	login: function(email, password, successCallback, errorCallback){
 		Parse.User.logIn(email, password, {
 			success: function(user) {
-				console.log("Usuário e senha Válidos - LOGIN SUCESSO");
-				console.log(user);
 				successCallback(user);
 			},
 			error: function(user, error) {
-				console.log("Usuário ou senha Inválidos");
-			   	errorCallback(error);
+				errorCallback(error);
 			}
 		})
 	},
@@ -123,6 +120,7 @@ var Api = {
 	},
 	getAll: function(klass, order, successCallback, errorCallback){
 		var query = new Parse.Query(klass);
+		query.equalTo("user", Auth.getCurrentUser());
 		query.ascending(order);
 		query.find({
 		  success: function(obj) {
@@ -136,6 +134,7 @@ var Api = {
 	getById: function(id, klass, successCallback, errorCallback){
 		var query = new Parse.Query(klass);
 		query.equalTo("objectId", id);
+		query.equalTo("user", Auth.getCurrentUser());
 		query.first({
 		  success: function(obj) {
 		    successCallback(obj)
@@ -148,6 +147,7 @@ var Api = {
 	getByKey: function(key, value, klass, successCallback, errorCallback){
 		var query = new Parse.Query(klass);
 		query.contains(key, value);
+		query.equalTo("user", Auth.getCurrentUser());
 		query.first({
 		  success: function(obj) {
 		    successCallback(obj)
