@@ -4,7 +4,7 @@
 		<title>CadernOnline | Gerenciador Acadêmico</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+		<link rel="icon" type="image/png" href="assets/images/icon-caderno-online.png" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
@@ -33,7 +33,7 @@
 						</a>
 						<ul class="right">
 							<li>
-								<a id="toggle-edit" class="waves-effect waves-blue" v-if="$route.path.indexOf('/caderno') == 0"><i class="material-icons">remove_red_eye</i></a>
+								<a id="toggle-edit" class="waves-effect waves-blue" v-if="$route.path.indexOf('/caderno') == 0"><i class="material-icons">mode_edit</i></a>
 								<a id="print" class="waves-effect waves-blue" v-if="$route.path.indexOf('/caderno') == 0"><i class="material-icons">print</i></a>
 								<a id="save" class="waves-effect waves-blue" v-if="$route.path.indexOf('/caderno') == 0"><i class="material-icons">save</i></a>
 							</li>

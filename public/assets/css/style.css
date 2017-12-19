@@ -378,7 +378,7 @@ textarea.materialize-textarea:focus:not([readonly])+label{
 
 #text img, video {
     max-width: 100%;
-    width: 800px;
+    width: 545px;
 }
 
 @media print {

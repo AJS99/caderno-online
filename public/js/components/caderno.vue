@@ -372,17 +372,17 @@ module.exports = {
 		},
 		toggleEdit(editMode){
 			if(editMode){
-				$("#toggle-edit i").text("mode_edit")
+				$("#toggle-edit i").text("remove_red_eye")
 				$("#text").attr("contenteditable", true)
 				$("#edicao").css("visibility", "visible")
 			} else {
-				$("#toggle-edit i").text("remove_red_eye")
+				$("#toggle-edit i").text("mode_edit")
 				$("#text").attr("contenteditable", false)
 				$("#edicao").css("visibility", "hidden")
 			}
 		},
 		isEditMode(){
-			return $("#toggle-edit").text().trim() == "mode_edit"
+			return $("#toggle-edit").text().trim() == "remove_red_eye"
 		},
 		filter(query){
 			query = getSlug(query)
