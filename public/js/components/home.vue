@@ -39,7 +39,7 @@
           <div class="footer-copyright">
             <div class="container">
             © Todos os direitos reservados
-            <a class="grey-text text-lighten-4 right" href="http://www.raccoonsoft.info/" target="_blank">Desenvolvido por RaccoonSoft</a>
+            <a class="grey-text text-lighten-4 right" href="raccoonsoft.info">Desenvolvido por Raccoon Soft</a>
             </div>
           </div>
         </footer>
